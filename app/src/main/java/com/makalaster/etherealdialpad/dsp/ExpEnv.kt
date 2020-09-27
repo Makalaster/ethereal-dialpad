@@ -2,15 +2,15 @@ package com.makalaster.etherealdialpad.dsp
 
 class ExpEnv: UGen() {
     companion object {
-        val hardFactor = 0.005f
-        val softFactor = 0.00005f
+        const val hardFactor = 0.005f
+        const val softFactor = 0.00005f
     }
 
-    var state: Boolean = false
-    var attenuation: Float = 0f
+    private var state: Boolean = false
+    private var attenuation: Float = 0f
     var factor = softFactor
-    val idealMarker = 0.25f
-    var marker = idealMarker
+    private val idealMarker = 0.25f
+    private var marker = idealMarker
 
     @Synchronized
     fun setActive(nextState: Boolean) {

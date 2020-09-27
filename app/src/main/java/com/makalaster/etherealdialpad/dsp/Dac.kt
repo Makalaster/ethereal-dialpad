@@ -61,7 +61,7 @@ class Dac: UGen() {
             track.write(silentTarget, 0, silentTarget.size)
         } else {
             for (i in 0 until CHUNK_SIZE) {
-                target[i] = (32768.0f * localBuffer[i]).toShort()
+                target[i] = (32768.0f * localBuffer[i]).toInt().toShort()
             }
             track.write(target, 0, target.size)
         }

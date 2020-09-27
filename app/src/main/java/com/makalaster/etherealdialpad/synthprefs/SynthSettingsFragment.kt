@@ -10,6 +10,6 @@ class SynthSettingsFragment : PreferenceFragmentCompat() {
     }
 
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
-        setPreferencesFromResource(R.xml.synth_prefs, rootKey)
+        setPreferencesFromResource(R.xml.synth_prefs, TAG)
     }
 }

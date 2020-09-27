@@ -33,7 +33,7 @@ abstract class UGen {
     }
 
     protected fun zeroBuffer(buffer: FloatArray) {
-        for (i in 0.. CHUNK_SIZE) {
+        for (i in 0 until CHUNK_SIZE) {
             buffer[i] = 0f
         }
     }
@@ -41,7 +41,7 @@ abstract class UGen {
     protected fun renderKids(buffer: FloatArray): Boolean {
         var didSomeRealWork = false
 
-        for (i in 0..kids.size) {
+        for (i in 0 until kids.size) {
             didSomeRealWork = didSomeRealWork || kids[i].render(buffer)
         }
 

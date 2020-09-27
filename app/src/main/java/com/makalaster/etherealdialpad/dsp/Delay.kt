@@ -2,7 +2,7 @@ package com.makalaster.etherealdialpad.dsp
 
 class Delay(length: Int): UGen() {
     private val line: FloatArray = FloatArray(length)
-    var pointer: Int = 0
+    private var pointer: Int = 0
 
     override fun render(buffer: FloatArray): Boolean {
         renderKids(buffer)
