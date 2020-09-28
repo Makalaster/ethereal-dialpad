@@ -88,7 +88,7 @@ class PadActivity : AppCompatActivity() {
                 BasicPadFragment()
             }
             R.string.trailpad_label -> {
-                BasicPadFragment()
+                TrailPadFragment()
             }
             R.string.pointpad_label -> {
                 BasicPadFragment()

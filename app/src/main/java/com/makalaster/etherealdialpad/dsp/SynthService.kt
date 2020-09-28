@@ -1,5 +1,6 @@
 package com.makalaster.etherealdialpad.dsp
 
+import ISynthService
 import android.app.Service
 import android.content.Context
 import android.content.Intent
@@ -7,6 +8,8 @@ import android.os.IBinder
 import android.os.Process
 import android.util.Log
 import com.makalaster.etherealdialpad.synthprefs.SynthSettingsFragment
+import kotlin.math.max
+import kotlin.math.min
 import kotlin.math.pow
 
 class SynthService: Service() {
@@ -27,7 +30,7 @@ class SynthService: Service() {
         }
 
         private fun buildFrequency(scale: FloatArray?, octaves: Int, input: Float): Float {
-            val variableInput: Float = input.coerceAtLeast(0.0f).coerceAtMost(1.0f)
+            val variableInput: Float = min(max(input, 0.0f), 1.0f)
             val base = 48f
             val mapped: Float
             mapped = if (scale == null) {
@@ -43,7 +46,10 @@ class SynthService: Service() {
     private var thread: Thread? = null
 
     override fun onBind(intent: Intent?): IBinder? {
-        val synthPrefs = applicationContext.getSharedPreferences(SynthSettingsFragment.TAG, Context.MODE_PRIVATE)
+        val synthPrefs = applicationContext.getSharedPreferences(
+            SynthSettingsFragment.TAG,
+            Context.MODE_PRIVATE
+        )
 
         val scale = buildScale(synthPrefs.getString("quantizer", "1,4,6,9,11"))
         val octaves = synthPrefs.getString("octaves", "3")!!.toInt()
