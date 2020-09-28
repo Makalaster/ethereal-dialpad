@@ -9,7 +9,7 @@ import androidx.annotation.StringRes
 import com.makalaster.etherealdialpad.R
 import com.makalaster.etherealdialpad.main.adapter.PadsAdapter
 import com.makalaster.etherealdialpad.pads.PadActivity
-import com.makalaster.etherealdialpad.synthprefs.SynthSettingsFragment
+import com.makalaster.etherealdialpad.synthprefs.SynthPreferencesFragment
 
 class MainActivity : AppCompatActivity(), PadsAdapter.OnPadClickListener {
 
@@ -33,7 +33,7 @@ class MainActivity : AppCompatActivity(), PadsAdapter.OnPadClickListener {
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         when (item?.itemId) {
             R.id.synth_preferences_menu -> {
-                supportFragmentManager.beginTransaction().replace(R.id.fragment_container, SynthSettingsFragment(), SynthSettingsFragment.TAG).addToBackStack(SynthSettingsFragment.TAG).commit()
+                supportFragmentManager.beginTransaction().replace(R.id.fragment_container, SynthPreferencesFragment(), SynthPreferencesFragment.TAG).addToBackStack(SynthPreferencesFragment.TAG).commit()
                 supportActionBar?.setDisplayHomeAsUpEnabled(true)
             }
             android.R.id.home -> {

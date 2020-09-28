@@ -7,7 +7,8 @@ import android.content.Intent
 import android.os.IBinder
 import android.os.Process
 import android.util.Log
-import com.makalaster.etherealdialpad.synthprefs.SynthSettingsFragment
+import androidx.preference.PreferenceManager
+import com.makalaster.etherealdialpad.synthprefs.SynthPreferencesFragment
 import kotlin.math.max
 import kotlin.math.min
 import kotlin.math.pow
@@ -46,10 +47,7 @@ class SynthService: Service() {
     private var thread: Thread? = null
 
     override fun onBind(intent: Intent?): IBinder? {
-        val synthPrefs = applicationContext.getSharedPreferences(
-            SynthSettingsFragment.TAG,
-            Context.MODE_PRIVATE
-        )
+        val synthPrefs = PreferenceManager.getDefaultSharedPreferences(applicationContext)
 
         val scale = buildScale(synthPrefs.getString("quantizer", "1,4,6,9,11"))
         val octaves = synthPrefs.getString("octaves", "3")!!.toInt()
