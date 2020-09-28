@@ -35,12 +35,12 @@ class TrailView @JvmOverloads constructor(
     private val pathPaint = Paint().apply {
         setARGB(255, 255, 255, 255)
         style = Paint.Style.STROKE
-        strokeWidth = 4f
+        strokeWidth = 16f
         setShadowLayer(6f, 0f, 0f, -0x1)
-        style = Paint.Style.FILL
     }
     private val fingerPaint = Paint().apply {
         setARGB(128, 255, 255, 255)
+        style = Paint.Style.FILL
         setShadowLayer(10f, 0f, 0f, -0x1)
     }
 
@@ -54,7 +54,7 @@ class TrailView @JvmOverloads constructor(
     private var lastX = 0f
     private var lastY = 0f
     private var d = 0f
-    private val maxD = 512f
+    private val maxD = 2048f
 
     override fun onTouchEvent(event: MotionEvent): Boolean {
         val ex = event.x
