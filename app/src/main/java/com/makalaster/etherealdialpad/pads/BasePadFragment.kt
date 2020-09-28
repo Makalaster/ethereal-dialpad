@@ -37,10 +37,6 @@ abstract class BasePadFragment : Fragment() {
             synthService = null
             onSynthServiceDisconnected()
         }
-
-        override fun onNullBinding(name: ComponentName?) {
-            synthService = null
-        }
     }
 
     protected open fun onSynthServiceConnected() {}

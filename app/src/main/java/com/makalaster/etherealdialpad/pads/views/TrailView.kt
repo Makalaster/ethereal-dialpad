@@ -15,8 +15,8 @@ import kotlin.math.sqrt
 class TrailView @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
-    defStyleAttr: Int = 0
-): View(context, attrs, defStyleAttr) {
+    defStyleAttr: Int = 0):
+    View(context, attrs, defStyleAttr) {
     init {
         setBackgroundColor(-0x1000000)
         keepScreenOn = true

@@ -9,7 +9,11 @@ import android.view.SurfaceView
 import kotlin.math.max
 import kotlin.math.min
 
-class FlatView @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0): SurfaceView(context, attrs, defStyleAttr) {
+class FlatView @JvmOverloads constructor(
+    context: Context,
+    attrs: AttributeSet? = null,
+    defStyleAttr: Int = 0):
+    SurfaceView(context, attrs, defStyleAttr) {
     init {
         setBackgroundColor(-0xbfbfc0)
     }
