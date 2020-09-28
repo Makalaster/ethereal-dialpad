@@ -1,14 +1,17 @@
 package com.makalaster.etherealdialpad.main
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import androidx.annotation.StringRes
 import com.makalaster.etherealdialpad.R
+import com.makalaster.etherealdialpad.main.adapter.PadsAdapter
+import com.makalaster.etherealdialpad.pads.PadActivity
 import com.makalaster.etherealdialpad.synthprefs.SynthSettingsFragment
 
-class MainActivity : AppCompatActivity() {
-
+class MainActivity : AppCompatActivity(), PadsAdapter.OnPadClickListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,6 +34,10 @@ class MainActivity : AppCompatActivity() {
         when (item?.itemId) {
             R.id.synth_preferences_menu -> {
                 supportFragmentManager.beginTransaction().replace(R.id.fragment_container, SynthSettingsFragment(), SynthSettingsFragment.TAG).addToBackStack(SynthSettingsFragment.TAG).commit()
+                supportActionBar?.setDisplayHomeAsUpEnabled(true)
+            }
+            android.R.id.home -> {
+                onBackPressed()
             }
         }
 
@@ -41,9 +48,14 @@ class MainActivity : AppCompatActivity() {
         super.onBackPressed()
 
         supportFragmentManager.popBackStack()
+        supportActionBar?.setDisplayHomeAsUpEnabled(false)
     }
 
-    private fun launchPad() {
+    private fun launchPad(@StringRes name: Int) {
+        startActivity(Intent(this, PadActivity::class.java).putExtra(PadActivity.PAD_NAME, name))
+    }
 
+    override fun onPadClicked(@StringRes name: Int) {
+        launchPad(name)
     }
 }

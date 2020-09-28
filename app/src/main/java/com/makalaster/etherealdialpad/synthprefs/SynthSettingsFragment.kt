@@ -6,10 +6,10 @@ import com.makalaster.etherealdialpad.R
 
 class SynthSettingsFragment : PreferenceFragmentCompat() {
     companion object {
-        const val TAG: String = "synth settings"
+        val TAG: String = SynthSettingsFragment::class.java.name
     }
 
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
-        setPreferencesFromResource(R.xml.synth_prefs, TAG)
+        setPreferencesFromResource(R.xml.synth_prefs, rootKey)
     }
 }

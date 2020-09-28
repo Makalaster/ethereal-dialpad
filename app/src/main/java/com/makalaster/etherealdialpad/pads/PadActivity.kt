@@ -4,11 +4,10 @@ import androidx.appcompat.app.AppCompatActivity
 import android.annotation.SuppressLint
 import android.os.Bundle
 import android.os.Handler
-import android.view.MotionEvent
+import android.view.MenuItem
 import android.view.View
-import android.widget.Button
-import android.widget.LinearLayout
-import android.widget.TextView
+import androidx.annotation.StringRes
+import androidx.fragment.app.FragmentContainerView
 import com.makalaster.etherealdialpad.R
 
 /**
@@ -16,8 +15,7 @@ import com.makalaster.etherealdialpad.R
  * status bar and navigation/system bar) with user interaction.
  */
 class PadActivity : AppCompatActivity() {
-    private lateinit var fullscreenContent: TextView
-    private lateinit var fullscreenContentControls: LinearLayout
+    private lateinit var fullscreenContent: FragmentContainerView
     private val hideHandler = Handler()
 
     @SuppressLint("InlinedApi")
@@ -38,28 +36,10 @@ class PadActivity : AppCompatActivity() {
     private val showPart2Runnable = Runnable {
         // Delayed display of UI elements
         supportActionBar?.show()
-        fullscreenContentControls.visibility = View.VISIBLE
     }
     private var isFullscreen: Boolean = false
 
     private val hideRunnable = Runnable { hide() }
-
-    /**
-     * Touch listener to use for in-layout UI controls to delay hiding the
-     * system UI. This is to prevent the jarring behavior of controls going away
-     * while interacting with activity UI.
-     */
-    private val delayHideTouchListener = View.OnTouchListener { view, motionEvent ->
-        when (motionEvent.action) {
-            MotionEvent.ACTION_DOWN -> if (AUTO_HIDE) {
-                delayedHide(AUTO_HIDE_DELAY_MILLIS)
-            }
-            MotionEvent.ACTION_UP -> view.performClick()
-            else -> {
-            }
-        }
-        false
-    }
 
     @SuppressLint("ClickableViewAccessibility")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -74,12 +54,7 @@ class PadActivity : AppCompatActivity() {
         fullscreenContent = findViewById(R.id.fullscreen_content)
         fullscreenContent.setOnClickListener { toggle() }
 
-        fullscreenContentControls = findViewById(R.id.fullscreen_content_controls)
-
-        // Upon interacting with UI controls, delay any scheduled hide()
-        // operations to prevent the jarring behavior of controls going away
-        // while interacting with the UI.
-        findViewById<Button>(R.id.dummy_button).setOnTouchListener(delayHideTouchListener)
+        setPad(intent.getIntExtra(PAD_NAME, R.string.basicpad_label))
     }
 
     override fun onPostCreate(savedInstanceState: Bundle?) {
@@ -89,6 +64,44 @@ class PadActivity : AppCompatActivity() {
         // created, to briefly hint to the user that UI controls
         // are available.
         delayedHide(100)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            android.R.id.home -> {
+                onBackPressed()
+            }
+        }
+
+        return false
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        finish()
+    }
+
+    private fun setPad(@StringRes name: Int) {
+        val pad: BasePadFragment =
+        when (name) {
+            R.string.basicpad_label -> {
+                BasicPadFragment()
+            }
+            R.string.trailpad_label -> {
+                BasicPadFragment()
+            }
+            R.string.pointpad_label -> {
+                BasicPadFragment()
+            }
+            R.string.gridpad_label -> {
+                BasicPadFragment()
+            }
+            else -> {
+                BasicPadFragment()
+            }
+        }
+
+        supportFragmentManager.beginTransaction().add(R.id.fullscreen_content, pad).commit()
     }
 
     private fun toggle() {
@@ -102,7 +115,6 @@ class PadActivity : AppCompatActivity() {
     private fun hide() {
         // Hide UI first
         supportActionBar?.hide()
-        fullscreenContentControls.visibility = View.GONE
         isFullscreen = false
 
         // Schedule a runnable to remove the status and navigation bar after a delay
@@ -149,5 +161,7 @@ class PadActivity : AppCompatActivity() {
          * and a change of the status and navigation bar.
          */
         private const val UI_ANIMATION_DELAY = 300
+
+        const val PAD_NAME = "pad name"
     }
 }

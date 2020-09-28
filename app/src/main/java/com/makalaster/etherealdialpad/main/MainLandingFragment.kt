@@ -1,5 +1,6 @@
 package com.makalaster.etherealdialpad.main
 
+import android.content.Context
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -17,7 +18,7 @@ class MainLandingFragment : Fragment() {
         const val TAG: String = "pad_list"
     }
 
-    private val padsAdapter = PadsAdapter()
+    private lateinit var padsAdapter: PadsAdapter
 
     private lateinit var viewModel: MainLandingViewModel
 
@@ -33,6 +34,14 @@ class MainLandingFragment : Fragment() {
 
         initView()
         initViewModel()
+    }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+
+        if (context is PadsAdapter.OnPadClickListener) {
+            padsAdapter = PadsAdapter(context)
+        }
     }
 
     private fun initView() {
