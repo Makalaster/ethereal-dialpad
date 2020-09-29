@@ -1,12 +1,12 @@
 package com.makalaster.etherealdialpad.pads
 
-import ISynthService
 import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
 import android.content.ServiceConnection
 import android.os.IBinder
 import androidx.fragment.app.Fragment
+import com.makalaster.etherealdialpad.dsp.ISynthService
 import com.makalaster.etherealdialpad.dsp.SynthService
 
 abstract class BasePadFragment : Fragment() {

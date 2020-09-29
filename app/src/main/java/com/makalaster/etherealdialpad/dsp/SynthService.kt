@@ -1,14 +1,11 @@
 package com.makalaster.etherealdialpad.dsp
 
-import ISynthService
 import android.app.Service
-import android.content.Context
 import android.content.Intent
 import android.os.IBinder
 import android.os.Process
 import android.util.Log
 import androidx.preference.PreferenceManager
-import com.makalaster.etherealdialpad.synthprefs.SynthPreferencesFragment
 import kotlin.math.max
 import kotlin.math.min
 import kotlin.math.pow
@@ -40,7 +37,7 @@ class SynthService: Service() {
                 val idx = ((scale.size * octaves + 1) * variableInput).toInt()
                 base + scale[idx % scale.size] + 12 * (idx / scale.size)
             }
-            return 2.0.pow((mapped - 69.0f) / 12.0f.toDouble()).toFloat() * 440.0f
+            return 2.0f.pow((mapped - 69.0f) / 12.0f) * 440.0f
         }
     }
 
@@ -108,8 +105,8 @@ class SynthService: Service() {
         ugOscB2.chuck(ugEnvB)
 
         if (!softEnvelope) {
-            ugEnvA.factor = ExpEnv.hardFactor
-            ugEnvB.factor = ExpEnv.hardFactor
+            ugEnvA.setLocalFactor(ExpEnv.hardFactor)
+            ugEnvB.setLocalFactor(ExpEnv.hardFactor)
         }
 
         if (thread != null) {

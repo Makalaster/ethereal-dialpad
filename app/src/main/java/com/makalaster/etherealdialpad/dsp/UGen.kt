@@ -6,7 +6,7 @@ abstract class UGen {
         const val SAMPLE_RATE = 22050
     }
 
-    val kids = ArrayList<UGen>()
+    private val kids = ArrayList<UGen>(0)
 
     /**
         fill CHUNK_SIZE samples
@@ -40,11 +40,9 @@ abstract class UGen {
 
     protected fun renderKids(buffer: FloatArray): Boolean {
         var didSomeRealWork = false
-
-        for (i in 0 until kids.size) {
-            didSomeRealWork = didSomeRealWork || kids[i].render(buffer)
+        for (k in kids.indices) {
+            didSomeRealWork = didSomeRealWork or kids[k].render(buffer)
         }
-
         return didSomeRealWork
     }
 }

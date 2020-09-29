@@ -16,6 +16,12 @@
             </intent-filter>
         </service>
 
+        <service android:name=".dspjava.SynthService">
+            <intent-filter>
+                <action android:name="com.makalaster.etherealdialpad.dsp.ISynthService"/>
+            </intent-filter>
+        </service>
+
         <activity
                 android:name=".pads.PadActivity"
                 android:configChanges="orientation|keyboardHidden|screenSize"

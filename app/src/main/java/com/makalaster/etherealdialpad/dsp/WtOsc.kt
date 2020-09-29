@@ -6,7 +6,7 @@ import kotlin.math.sin
 class WtOsc: UGen() {
     companion object {
         private const val BITS = 8
-        const val ENTRIES = 1 shl (BITS - 1)
+        const val ENTRIES = 1 shl BITS - 1
         const val MASK = ENTRIES - 1
     }
 
@@ -20,13 +20,14 @@ class WtOsc: UGen() {
         cyclesPerSample = freq / SAMPLE_RATE
     }
 
+    @Synchronized
     override fun render(buffer: FloatArray): Boolean {
         var localPhase = phase
-        for (i in 0 until  CHUNK_SIZE) {
+        for (i in 0 until CHUNK_SIZE) {
             val scaled: Float = localPhase * ENTRIES
             val index: Int = scaled.toInt()
             val fraction: Float = scaled - index
-            buffer[i] += (1.0f - fraction) * table[index and MASK]
+            buffer[i] += (1.0f - fraction) * table[index and MASK] + fraction * table[(index + 1) and MASK]
             localPhase += cyclesPerSample
         }
         phase = localPhase - localPhase.toInt()
@@ -46,7 +47,7 @@ class WtOsc: UGen() {
     fun fillWithHardSin(exp: Float): WtOsc? {
         val dt = (2.0 * Math.PI / ENTRIES).toFloat()
         for (i in 0 until ENTRIES) {
-            table[i] = sin(i * dt.toDouble()).pow(exp.toDouble()).toFloat()
+            table[i] = sin(i * dt).pow(exp)
         }
 
         return this

@@ -1,11 +1,11 @@
 package com.makalaster.etherealdialpad.pads.views
 
-import ISynthService
 import android.content.Context
 import android.os.RemoteException
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.SurfaceView
+import com.makalaster.etherealdialpad.dsp.ISynthService
 import kotlin.math.max
 import kotlin.math.min
 

@@ -1,6 +1,5 @@
 package com.makalaster.etherealdialpad.pads.views
 
-import ISynthService
 import android.content.Context
 import android.graphics.Canvas
 import android.graphics.Paint
@@ -9,6 +8,7 @@ import android.os.RemoteException
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
+import com.makalaster.etherealdialpad.dsp.ISynthService
 import kotlin.collections.ArrayList
 import kotlin.math.sqrt
 
