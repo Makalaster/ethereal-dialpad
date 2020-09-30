@@ -26,11 +26,8 @@ class PadActivity : AppCompatActivity() {
         // and API 19 (KitKat). It is safe to use them, as they are inlined
         // at compile-time and do nothing on earlier devices.
         fullscreenContent.systemUiVisibility =
-            View.SYSTEM_UI_FLAG_LOW_PROFILE or
                     View.SYSTEM_UI_FLAG_FULLSCREEN or
-                    View.SYSTEM_UI_FLAG_LAYOUT_STABLE or
-                    View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY or
-                    View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION or
+                    View.SYSTEM_UI_FLAG_IMMERSIVE or
                     View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
     }
     private val showPart2Runnable = Runnable {
@@ -55,6 +52,12 @@ class PadActivity : AppCompatActivity() {
         fullscreenContent.setOnClickListener { toggle() }
 
         setPad(intent.getIntExtra(PAD_NAME, R.string.basicpad_label))
+
+        window.decorView.setOnSystemUiVisibilityChangeListener {
+            if (it and View.SYSTEM_UI_FLAG_FULLSCREEN == 0) {
+                toggle()
+            }
+        }
     }
 
     override fun onPostCreate(savedInstanceState: Bundle?) {
@@ -132,6 +135,8 @@ class PadActivity : AppCompatActivity() {
         // Schedule a runnable to display UI elements after a delay
         hideHandler.removeCallbacks(hidePart2Runnable)
         hideHandler.postDelayed(showPart2Runnable, UI_ANIMATION_DELAY.toLong())
+
+        delayedHide(AUTO_HIDE_DELAY_MILLIS)
     }
 
     /**

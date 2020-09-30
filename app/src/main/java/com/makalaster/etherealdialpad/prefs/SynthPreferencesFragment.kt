@@ -1,4 +1,4 @@
-package com.makalaster.etherealdialpad.synthprefs
+package com.makalaster.etherealdialpad.prefs
 
 import android.os.Bundle
 import androidx.preference.PreferenceFragmentCompat

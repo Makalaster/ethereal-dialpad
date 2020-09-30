@@ -1,10 +1,10 @@
 package com.makalaster.etherealdialpad.dsp
 
 class Flange(length: Int, freq: Float): UGen() {
-    var line: FloatArray = FloatArray(length)
-    var phase = 0f
-    var cyclesPerSample = freq / SAMPLE_RATE
-    var pointer = 0
+    private var line: FloatArray = FloatArray(length)
+    private var phase = 0f
+    private var cyclesPerSample = freq / SAMPLE_RATE
+    private var pointer = 0
 
     override fun render(buffer: FloatArray): Boolean {
         renderKids(buffer)

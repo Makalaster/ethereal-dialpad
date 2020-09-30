@@ -9,16 +9,15 @@
             android:roundIcon="@drawable/icon"
             android:supportsRtl="true"
             android:theme="@style/AppTheme">
+        <activity
+                android:name=".prefs.SettingsActivity"
+                android:label="@string/title_activity_synth_settings">
+
+        </activity>
 
         <service android:name=".dsp.SynthService">
             <intent-filter>
-                <action android:name="com.makalaster.etherealdialpad.dsp.ISynthService"/>
-            </intent-filter>
-        </service>
-
-        <service android:name=".dspjava.SynthService">
-            <intent-filter>
-                <action android:name="com.makalaster.etherealdialpad.dsp.ISynthService"/>
+                <action android:name="com.makalaster.etherealdialpad.dsp.ISynthService" />
             </intent-filter>
         </service>
 
@@ -26,7 +25,7 @@
                 android:name=".pads.PadActivity"
                 android:configChanges="orientation|keyboardHidden|screenSize"
                 android:label="@string/title_activity_pad"
-                android:theme="@style/FullscreenTheme"></activity>
+                android:theme="@style/FullscreenTheme" />
         <activity android:name=".main.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
