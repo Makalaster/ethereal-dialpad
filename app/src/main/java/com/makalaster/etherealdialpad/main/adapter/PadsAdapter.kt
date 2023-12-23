@@ -6,7 +6,6 @@ import androidx.annotation.StringRes
 import androidx.recyclerview.widget.RecyclerView
 import com.makalaster.etherealdialpad.pads.Pad
 import com.makalaster.etherealdialpad.R
-import kotlinx.android.synthetic.main.layout_pad_viewholder.view.*
 
 class PadsAdapter(listener: OnPadClickListener): RecyclerView.Adapter<PadViewHolder>() {
     private val padList: MutableList<Pad> = ArrayList()
@@ -18,7 +17,7 @@ class PadsAdapter(listener: OnPadClickListener): RecyclerView.Adapter<PadViewHol
 
     override fun onBindViewHolder(holder: PadViewHolder, position: Int) {
         holder.bind(padList[position])
-        holder.itemView.root_view.setOnClickListener {
+        holder.itemView.rootView.setOnClickListener {
             padClickListener.onPadClicked(padList[position].name)
         }
     }

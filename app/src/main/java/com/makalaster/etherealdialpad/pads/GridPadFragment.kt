@@ -5,7 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.makalaster.etherealdialpad.R
-import kotlinx.android.synthetic.main.fragment_grid_pad.*
+import com.makalaster.etherealdialpad.pads.views.GridView
 
 class GridPadFragment : BasePadFragment() {
     override fun onCreateView(
@@ -17,7 +17,9 @@ class GridPadFragment : BasePadFragment() {
     }
 
     override fun onSynthServiceConnected() {
-        grid_view.setSynthService(synthService)
-        grid_view.onConnected()
+        view?.findViewById<GridView>(R.id.grid_view)?.let {
+            it.setSynthService(synthService)
+            it.onConnected()
+        }
     }
 }

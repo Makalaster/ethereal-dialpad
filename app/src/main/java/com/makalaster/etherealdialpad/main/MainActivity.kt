@@ -31,8 +31,8 @@ class MainActivity : AppCompatActivity(), PadsAdapter.OnPadClickListener {
         return true
     }
 
-    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-        when (item?.itemId) {
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
             R.id.synth_preferences_menu -> {
                 startActivity(Intent(this, SettingsActivity::class.java).putExtra(SettingsActivity.PREFERENCE_PANE, SettingsActivity.SYNTH_PREFERENCES))
             }

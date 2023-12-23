@@ -5,7 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.makalaster.etherealdialpad.R
-import kotlinx.android.synthetic.main.fragment_trail_pad.*
+import com.makalaster.etherealdialpad.pads.views.TrailView
 
 class TrailPadFragment : BasePadFragment() {
     override fun onCreateView(
@@ -17,6 +17,6 @@ class TrailPadFragment : BasePadFragment() {
     }
 
     override fun onSynthServiceConnected() {
-        trail_view.setSynthService(synthService)
+        view?.findViewById<TrailView>(R.id.trail_view)?.setSynthService(synthService)
     }
 }

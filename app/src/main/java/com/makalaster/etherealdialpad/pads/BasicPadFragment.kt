@@ -5,7 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.makalaster.etherealdialpad.R
-import kotlinx.android.synthetic.main.fragment_basic_pad.*
+import com.makalaster.etherealdialpad.pads.views.FlatView
 
 class BasicPadFragment : BasePadFragment() {
 
@@ -18,6 +18,6 @@ class BasicPadFragment : BasePadFragment() {
     }
 
     override fun onSynthServiceConnected() {
-        flat_view.setSynthService(synthService)
+        view?.findViewById<FlatView>(R.id.flat_view)?.setSynthService(synthService)
     }
 }

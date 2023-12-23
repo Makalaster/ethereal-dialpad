@@ -7,10 +7,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.makalaster.etherealdialpad.R
 import com.makalaster.etherealdialpad.main.adapter.PadsAdapter
-import kotlinx.android.synthetic.main.main_landing_fragment.*
 
 class MainLandingFragment : Fragment() {
 
@@ -45,19 +44,16 @@ class MainLandingFragment : Fragment() {
     }
 
     private fun initView() {
-        with(pad_recycler) {
-            layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
-            adapter = padsAdapter
-        }
+        view?.findViewById<RecyclerView>(R.id.pad_recycler)?.adapter = padsAdapter
     }
 
     private fun initViewModel() {
-        viewModel = ViewModelProvider(this).get(MainLandingViewModel::class.java)
+        viewModel = ViewModelProvider(this)[MainLandingViewModel::class.java]
 
         viewModel.generatePads()
 
-        viewModel.pads.observe(viewLifecycleOwner, {
+        viewModel.pads.observe(viewLifecycleOwner) {
             padsAdapter.setPads(it)
-        })
+        }
     }
 }
