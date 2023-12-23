@@ -10,7 +10,6 @@ import com.makalaster.etherealdialpad.R
 import com.makalaster.etherealdialpad.main.adapter.PadsAdapter
 import com.makalaster.etherealdialpad.pads.PadActivity
 import com.makalaster.etherealdialpad.prefs.SettingsActivity
-import com.makalaster.etherealdialpad.prefs.SynthPreferencesFragment
 
 class MainActivity : AppCompatActivity(), PadsAdapter.OnPadClickListener {
 
