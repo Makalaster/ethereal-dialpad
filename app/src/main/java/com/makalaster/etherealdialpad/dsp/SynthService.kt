@@ -42,7 +42,7 @@ class SynthService: Service() {
 
     private var thread: Thread? = null
 
-    override fun onBind(intent: Intent?): IBinder? {
+    override fun onBind(intent: Intent?): IBinder {
         val synthPrefs = PreferenceManager.getDefaultSharedPreferences(applicationContext)
 
         val scale = buildScale(synthPrefs.getString("quantizer", "1,4,6,9,11"))

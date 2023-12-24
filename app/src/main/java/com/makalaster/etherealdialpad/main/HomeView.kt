@@ -92,8 +92,7 @@ fun HomeContent(
 @Composable
 fun PadItem(@DrawableRes drawableId: Int,
             @StringRes textId: Int,
-            onClick: (Int) -> Unit,
-            modifier: Modifier = Modifier
+            onClick: (Int) -> Unit
 ) {
     Row(
         verticalAlignment = Alignment.CenterVertically,
