@@ -30,8 +30,7 @@ class SynthService: Service() {
         private fun buildFrequency(scale: FloatArray?, octaves: Int, input: Float): Float {
             val variableInput: Float = min(max(input, 0.0f), 1.0f)
             val base = 48f
-            val mapped: Float
-            mapped = if (scale == null) {
+            val mapped: Float = if (scale == null) {
                 base + variableInput * octaves * 12.0f
             } else {
                 val idx = ((scale.size * octaves + 1) * variableInput).toInt()
