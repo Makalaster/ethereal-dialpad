@@ -31,12 +31,18 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.makalaster.etherealdialpad.R
+import com.makalaster.etherealdialpad.navigation.BasicPad
+import com.makalaster.etherealdialpad.navigation.DrawPad
+import com.makalaster.etherealdialpad.navigation.EtherealDialpadDestination
+import com.makalaster.etherealdialpad.navigation.GridPad
+import com.makalaster.etherealdialpad.navigation.SwarmPad
 import com.makalaster.etherealdialpad.ui.theme.EtherealDialpadTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeView(
     viewModel: HomeViewModel = viewModel(),
+    onPadClick: (String) -> Unit,
     onSettingsClick: () -> Unit
 ) {
     Scaffold(
@@ -61,13 +67,13 @@ fun HomeView(
             )
         }
     ) { padding ->
-        HomeContent(viewModel::padSelected, Modifier.padding(padding))
+        HomeContent(onPadClick, Modifier.padding(padding))
     }
 }
 
 @Composable
 fun HomeContent(
-    onPadClick: (Int) -> Unit,
+    onPadClick: (String) -> Unit,
     modifier: Modifier = Modifier
 ) {
     Column(
@@ -79,32 +85,32 @@ fun HomeContent(
         Spacer(modifier = Modifier.height(8.dp))
         Text(text = stringResource(id = R.string.select_dialpad))
         Spacer(modifier = Modifier.height(4.dp))
-        PadItem(drawableId = R.drawable.basicpad_icon, textId = R.string.basicpad_label, onClick = onPadClick)
+        PadItem(BasicPad, onPadClick)
         Spacer(modifier = Modifier.height(4.dp))
-        PadItem(drawableId = R.drawable.trailpad_icon, textId = R.string.trailpad_label, onClick = onPadClick)
+        PadItem(DrawPad, onPadClick)
         Spacer(modifier = Modifier.height(4.dp))
-        PadItem(drawableId = R.drawable.pointpad_icon, textId = R.string.pointpad_label, onClick = onPadClick)
+        PadItem(SwarmPad, onPadClick)
         Spacer(modifier = Modifier.height(4.dp))
-        PadItem(drawableId = R.drawable.gridpad_icon, textId = R.string.gridpad_label, onClick = onPadClick)
+        PadItem(GridPad, onPadClick)
     }
 }
 
 @Composable
-fun PadItem(@DrawableRes drawableId: Int,
-            @StringRes textId: Int,
-            onClick: (Int) -> Unit
+fun PadItem(
+    pad: EtherealDialpadDestination,
+    onPadClick: (String) -> Unit
 ) {
     Row(
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(8.dp),
-        modifier = Modifier.clickable { onClick(textId) }
+        modifier = Modifier.clickable { onPadClick(pad.route) }
     ) {
         Image(
-            painter = painterResource(id = drawableId),
+            painter = painterResource(id = pad.iconId),
             contentDescription = "Pad item",
             modifier = Modifier.size(48.dp)
         )
-        Text(text = stringResource(id = textId))
+        Text(text = stringResource(id = pad.nameId))
     }
 }
 
@@ -112,6 +118,9 @@ fun PadItem(@DrawableRes drawableId: Int,
 @Composable
 fun HomeViewPreview() {
     EtherealDialpadTheme {
-        HomeView(onSettingsClick = {})
+        HomeView(
+            onPadClick = {},
+            onSettingsClick = {}
+        )
     }
 }

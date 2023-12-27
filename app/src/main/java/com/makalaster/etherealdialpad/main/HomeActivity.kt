@@ -8,7 +8,10 @@ import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Surface
+import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.navigation.compose.rememberNavController
+import com.makalaster.etherealdialpad.navigation.EtherealDialpadNavHost
 import com.makalaster.etherealdialpad.pads.PadActivity
 import com.makalaster.etherealdialpad.prefs.SettingsActivity
 import com.makalaster.etherealdialpad.ui.theme.EtherealDialpadTheme
@@ -20,12 +23,8 @@ class HomeActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         setContent {
-            EtherealDialpadTheme {
-                Surface(
-                    modifier = Modifier.fillMaxSize()
-                ) {
-                    HomeView(onSettingsClick = { goToSettings() })
-                }
+            EtherealDialpadApp {
+                goToSettings()
             }
         }
 
@@ -41,6 +40,21 @@ class HomeActivity : AppCompatActivity() {
     private fun launchPad(@StringRes name: Int) {
         if (name != -1) {
             startActivity(Intent(this, PadActivity::class.java).putExtra(PadActivity.PAD_NAME, name))
+        }
+    }
+}
+
+@Composable
+fun EtherealDialpadApp(onSettingsClick: () -> Unit) {
+    val navController = rememberNavController()
+    EtherealDialpadTheme {
+        Surface(
+            modifier = Modifier.fillMaxSize()
+        ) {
+            EtherealDialpadNavHost(
+                navController = navController,
+                onSettingsClick
+            )
         }
     }
 }

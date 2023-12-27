@@ -7,3 +7,5 @@ val primaryDark = Color(0xFF00574B)
 val accent = Color(0xFFD81B60)
 
 val blackOverlay = Color(0x66000000)
+
+val padStartBackground = Color(-0xFFbfbfc0)
