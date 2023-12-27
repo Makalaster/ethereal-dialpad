@@ -1,7 +1,5 @@
 package com.makalaster.etherealdialpad.main
 
-import androidx.annotation.DrawableRes
-import androidx.annotation.StringRes
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -29,7 +27,6 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.makalaster.etherealdialpad.R
 import com.makalaster.etherealdialpad.navigation.BasicPad
 import com.makalaster.etherealdialpad.navigation.DrawPad
@@ -41,7 +38,6 @@ import com.makalaster.etherealdialpad.ui.theme.EtherealDialpadTheme
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeView(
-    viewModel: HomeViewModel = viewModel(),
     onPadClick: (String) -> Unit,
     onSettingsClick: () -> Unit
 ) {
@@ -84,13 +80,13 @@ fun HomeContent(
         Text(text = stringResource(id = R.string.app_desc))
         Spacer(modifier = Modifier.height(8.dp))
         Text(text = stringResource(id = R.string.select_dialpad))
-        Spacer(modifier = Modifier.height(4.dp))
+        Spacer(modifier = Modifier.height(12.dp))
         PadItem(BasicPad, onPadClick)
-        Spacer(modifier = Modifier.height(4.dp))
+        Spacer(modifier = Modifier.height(12.dp))
         PadItem(DrawPad, onPadClick)
-        Spacer(modifier = Modifier.height(4.dp))
+        Spacer(modifier = Modifier.height(12.dp))
         PadItem(SwarmPad, onPadClick)
-        Spacer(modifier = Modifier.height(4.dp))
+        Spacer(modifier = Modifier.height(12.dp))
         PadItem(GridPad, onPadClick)
     }
 }

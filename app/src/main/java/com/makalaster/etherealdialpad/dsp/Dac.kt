@@ -36,7 +36,6 @@ class Dac: UGen() {
             .setAudioAttributes(audioAttributes)
             .setAudioFormat(audioFormat)
             .setBufferSizeInBytes(max(CHUNK_SIZE * 4, minSize))
-
             .build()
     }
 

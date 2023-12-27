@@ -1,96 +1,83 @@
 package com.makalaster.etherealdialpad.pads
 
-import android.view.MotionEvent
-import androidx.compose.foundation.Canvas
-import androidx.compose.foundation.background
+import androidx.compose.foundation.gestures.awaitDragOrCancellation
 import androidx.compose.foundation.gestures.awaitEachGesture
 import androidx.compose.foundation.gestures.awaitFirstDown
 import androidx.compose.foundation.gestures.awaitTouchSlopOrCancellation
-import androidx.compose.foundation.gestures.drag
-import androidx.compose.foundation.gestures.forEachGesture
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.geometry.Offset
-import androidx.compose.ui.input.pointer.AwaitPointerEventScope
-import androidx.compose.ui.input.pointer.PointerInputChange
-import androidx.compose.ui.input.pointer.consumePositionChange
+import androidx.compose.ui.draw.drawBehind
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.pointerInput
-import androidx.compose.ui.input.pointer.positionChange
-import androidx.compose.ui.res.colorResource
-import com.makalaster.etherealdialpad.ui.theme.EtherealDialpadTheme
+import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.makalaster.etherealdialpad.ui.theme.padStartBackground
+import kotlin.math.max
+import kotlin.math.min
 
 @Composable
 fun BasicPad(
-
+    viewModel: PadViewModel = viewModel()
 ) {
-    Canvas(
+    var color by remember { mutableStateOf(padStartBackground) }
+
+    val width: Float
+    val height: Float
+    LocalConfiguration.current.let {
+        width = with(LocalDensity.current) { it.screenWidthDp.dp.toPx() }
+        height = with(LocalDensity.current) { it.screenHeightDp.dp.toPx() }
+    }
+
+    val ctx = LocalContext.current
+    viewModel.refreshPrefs(ctx)
+
+    Spacer(
         modifier = Modifier
             .fillMaxSize()
-            .background(color = padStartBackground)
-            .dragMotionEvent(
-                onDragStart = {
+            .drawBehind {
+                drawRect(color)
+            }
+            .pointerInput(Unit) {
+                awaitEachGesture {
+                    val down = awaitFirstDown()
 
-                },
-                onDrag = {
+                    var change = awaitTouchSlopOrCancellation(down.id) { change, _ ->
+                        viewModel.primaryOn()
+                        change.consume()
+                    }
 
-                },
-                onDragEnd = {
+                    while (change != null && change.pressed) {
+                        change = awaitDragOrCancellation(change.id)
 
+                        if (change != null && change.pressed) {
+                            with(change.position) {
+                                val u = min(1f, max(0f, x / width))
+                                val v = min(1f, max(0f, y / height))
+
+                                val r = (128 + 128 * (u - 0.5f)).toInt()
+                                val g = (128 + 128 * (v - 0.5f)).toInt()
+                                val b = (128 + 128 * (0.5f - u)).toInt()
+
+                                color = Color(r, g, b)
+
+                                viewModel.primaryXY(ctx, u, v)
+                            }
+                            change.consume()
+                        } else {
+                            color = padStartBackground
+                            viewModel.primaryOff()
+                        }
+                    }
                 }
-            )
-    ) {
-
-    }
+            }
+    )
 }
-
-suspend fun AwaitPointerEventScope.awaitDragMotionEvent(
-    onDragStart: (PointerInputChange) -> Unit = {},
-    onDrag: (PointerInputChange) -> Unit = {},
-    onDragEnd: (PointerInputChange) -> Unit = {}
-) {
-    // Wait for at least one pointer to press down, and set first contact position
-    val down: PointerInputChange = awaitFirstDown()
-    onDragStart(down)
-
-    var pointer = down
-
-    // 🔥 Waits for drag threshold to be passed by pointer
-    // or it returns null if up event is triggered
-    val change: PointerInputChange? =
-        awaitTouchSlopOrCancellation(down.id) { change: PointerInputChange, _: Offset ->
-            // 🔥🔥 If consumePositionChange() is not consumed drag does not
-            // function properly.
-            // Consuming position change causes change.positionChanged() to return false.
-            if (change.positionChange() != Offset.Zero) change.consume()
-        }
-
-    if (change != null) {
-        // 🔥 Calls  awaitDragOrCancellation(pointer) in a while loop
-        drag(change.id) { pointerInputChange: PointerInputChange ->
-            pointer = pointerInputChange
-            onDrag(pointer)
-        }
-
-        // All of the pointers are up
-        onDragEnd(pointer)
-    } else {
-        // Drag threshold is not passed and last pointer is up
-        onDragEnd(pointer)
-    }
-}
-
-fun Modifier.dragMotionEvent(
-    onDragStart: (PointerInputChange) -> Unit = {},
-    onDrag: (PointerInputChange) -> Unit = {},
-    onDragEnd: (PointerInputChange) -> Unit = {}
-) = this.then(
-    Modifier.pointerInput(Unit) {
-        awaitEachGesture {
-            awaitDragMotionEvent(onDragStart, onDrag, onDragEnd)
-        }
-    }
-)
