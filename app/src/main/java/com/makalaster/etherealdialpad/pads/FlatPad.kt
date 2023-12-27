@@ -25,7 +25,7 @@ import kotlin.math.max
 import kotlin.math.min
 
 @Composable
-fun BasicPad(
+fun FlatPad(
     viewModel: PadViewModel = viewModel()
 ) {
     var color by remember { mutableStateOf(padStartBackground) }

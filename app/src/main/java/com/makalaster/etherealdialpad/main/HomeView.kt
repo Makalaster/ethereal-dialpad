@@ -28,7 +28,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.makalaster.etherealdialpad.R
-import com.makalaster.etherealdialpad.navigation.BasicPad
+import com.makalaster.etherealdialpad.navigation.FlatPad
 import com.makalaster.etherealdialpad.navigation.DrawPad
 import com.makalaster.etherealdialpad.navigation.EtherealDialpadDestination
 import com.makalaster.etherealdialpad.navigation.GridPad
@@ -81,7 +81,7 @@ fun HomeContent(
         Spacer(modifier = Modifier.height(8.dp))
         Text(text = stringResource(id = R.string.select_dialpad))
         Spacer(modifier = Modifier.height(12.dp))
-        PadItem(BasicPad, onPadClick)
+        PadItem(FlatPad, onPadClick)
         Spacer(modifier = Modifier.height(12.dp))
         PadItem(DrawPad, onPadClick)
         Spacer(modifier = Modifier.height(12.dp))

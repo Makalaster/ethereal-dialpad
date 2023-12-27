@@ -16,7 +16,7 @@ object Home: EtherealDialpadDestination {
     override val route = "home"
 }
 
-object BasicPad: EtherealDialpadDestination {
+object FlatPad: EtherealDialpadDestination {
     @DrawableRes override val iconId = R.drawable.basicpad_icon
     @StringRes override val nameId = R.string.basicpad_label
     override val route = "basic_pad"
@@ -46,4 +46,4 @@ object Settings: EtherealDialpadDestination {
     override val route = "settings"
 }
 
-val pads = listOf(BasicPad, DrawPad, SwarmPad, GridPad)
+val pads = listOf(FlatPad, DrawPad, SwarmPad, GridPad)

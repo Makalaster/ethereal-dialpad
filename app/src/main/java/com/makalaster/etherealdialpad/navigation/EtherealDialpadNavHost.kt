@@ -6,7 +6,10 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.makalaster.etherealdialpad.main.HomeView
-import com.makalaster.etherealdialpad.pads.BasicPad
+import com.makalaster.etherealdialpad.pads.FlatPad
+import com.makalaster.etherealdialpad.pads.DrawPad
+import com.makalaster.etherealdialpad.pads.GridPad
+import com.makalaster.etherealdialpad.pads.SwarmPad
 
 @Composable
 fun EtherealDialpadNavHost(
@@ -24,17 +27,17 @@ fun EtherealDialpadNavHost(
                 onSettingsClick = onSettingsClick
             )
         }
-        composable(route = BasicPad.route) {
-            BasicPad()
+        composable(route = FlatPad.route) {
+            FlatPad()
         }
         composable(route = DrawPad.route) {
-
+            DrawPad()
         }
         composable(route = SwarmPad.route) {
-
+            SwarmPad()
         }
         composable(route = GridPad.route) {
-
+            GridPad()
         }
         composable(route = Settings.route) {
 
