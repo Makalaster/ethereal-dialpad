@@ -10,6 +10,7 @@ import android.view.MotionEvent
 import android.view.View
 import com.makalaster.etherealdialpad.dsp.ISynthService
 import kotlin.collections.ArrayList
+import kotlin.math.pow
 import kotlin.math.sqrt
 
 class TrailView @JvmOverloads constructor(
@@ -44,9 +45,6 @@ class TrailView @JvmOverloads constructor(
         setShadowLayer(10f, 0f, 0f, -0x1)
     }
 
-    private var manualOffset = 0
-
-    private var lastTick: Long = 0
     private var xCoord = 0f
     private var yCoord = 0f
     private var isTouching = false
@@ -61,6 +59,7 @@ class TrailView @JvmOverloads constructor(
         val ey = event.y
         xCoord = ex / width
         yCoord = 1 - ey / height
+
         if (event.action == MotionEvent.ACTION_MOVE) {
             try {
                 synthService?.primaryXY(xCoord, yCoord)
@@ -69,8 +68,7 @@ class TrailView @JvmOverloads constructor(
             }
             xHistory.add(ex)
             yHistory.add(ey)
-            d += sqrt((ex - lastX) * (ex - lastX) + (ey - lastY) * (ey - lastY).toDouble())
-                .toFloat()
+            d += sqrt((ex - lastX).pow(2) + (ey - lastY).pow(2).toDouble()).toFloat()
             while (d > maxD && xHistory.size > 1) {
                 val surplus = d - maxD
                 val ax = xHistory[0]
