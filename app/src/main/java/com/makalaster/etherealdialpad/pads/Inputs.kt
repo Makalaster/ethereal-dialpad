@@ -1,6 +1,7 @@
 package com.makalaster.etherealdialpad.pads
 
 import androidx.compose.foundation.gestures.detectDragGestures
+import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.input.pointer.PointerInputChange
@@ -12,15 +13,26 @@ fun Modifier.lightsAndSounds(
     lights: (PointerInputChange) -> Unit,
     sounds: (Float, Float) -> Unit
 ) = this.then(
-    Modifier.pointerInput(Unit) {
-        detectDragGestures(
-            onDragStart = { on(it) },
-            onDragEnd = { off() }
-        ) { change, _ ->
-            lights(change)
-            with(change.position) {
-                sounds(x, y)
+    Modifier
+        .pointerInput(Unit) {
+            detectDragGestures(
+                onDragStart = { on(it) },
+                onDragEnd = { off() }
+            ) { change, _ ->
+                lights(change)
+                with(change.position) {
+                    sounds(x, y)
+                }
             }
-        }
     }
+        .pointerInput(Unit) {
+            detectTapGestures(
+                onPress = {
+                    on(it)
+                    if (tryAwaitRelease()) {
+                        off()
+                    }
+                },
+            )
+        }
 )

@@ -36,12 +36,11 @@ class PointView @JvmOverloads constructor(
         strokeWidth = 2f
         isAntiAlias = true
     }
-    private var manualOffset = 0
-    private var lastTick: Long = 0
+
     private var xCoord = 0f
     private var yCoord = 0f
     private var targetX = 0f
-    private var targetY:Float = 0f
+    private var targetY = 0f
     private var isTouching = false
 
     private val lines: FloatArray = FloatArray(4 * N)

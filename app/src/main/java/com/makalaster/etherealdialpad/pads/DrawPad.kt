@@ -1,27 +1,46 @@
 package com.makalaster.etherealdialpad.pads
 
+import androidx.activity.compose.BackHandler
+import androidx.activity.compose.LocalOnBackPressedDispatcherOwner
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.geometry.Offset
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
-import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.makalaster.etherealdialpad.ui.theme.padStartBackground
+import kotlinx.coroutines.android.awaitFrame
+import kotlinx.coroutines.launch
 
 @Composable
 fun DrawPad(
     viewModel: PadViewModel = viewModel()
 ) {
+    val onBackPressedDispatcher = LocalOnBackPressedDispatcherOwner.current?.onBackPressedDispatcher
+    var backPressHandled by remember { mutableStateOf(false) }
+    val coroutineScope = rememberCoroutineScope()
+
+    BackHandler(enabled = !backPressHandled) {
+        viewModel.primaryOff()
+        backPressHandled = true
+        coroutineScope.launch {
+            awaitFrame()
+            onBackPressedDispatcher?.onBackPressed()
+            backPressHandled = false
+        }
+    }
+
     val width: Float
     val height: Float
     LocalConfiguration.current.let {
@@ -52,13 +71,14 @@ fun DrawPad(
             .lightsAndSounds(
                 on = {
                     viewModel.primaryOn()
+                    viewModel.primaryXY(ctx, it.x / width, 1 - it.y / height)
                 },
                 off = {
                     viewModel.primaryOff()
                     lines.clear()
                 },
                 lights = { change ->
-                    val line = Line(change.previousPosition, change.position)
+                    val line = Line(change.previousPosition, change.position, strokeWidth = 10.dp)
                     lines.add(line)
                 },
                 sounds = { x, y ->
@@ -142,10 +162,3 @@ fun DrawPad(
         }
     }
 }
-
-data class Line(
-    val start: Offset,
-    val end: Offset,
-    val color: Color = Color.White,
-    val strokeWidth: Dp = 10.dp
-)
