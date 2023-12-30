@@ -1,9 +1,5 @@
 package com.makalaster.etherealdialpad.pads
 
-import androidx.compose.foundation.gestures.awaitDragOrCancellation
-import androidx.compose.foundation.gestures.awaitEachGesture
-import androidx.compose.foundation.gestures.awaitFirstDown
-import androidx.compose.foundation.gestures.awaitTouchSlopOrCancellation
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
@@ -14,7 +10,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
@@ -40,44 +35,34 @@ fun FlatPad(
     val ctx = LocalContext.current
     viewModel.refreshPrefs(ctx)
 
+    val xTransform: (Float) -> Float = { x -> min(1f, max(0f, x / width)) }
+    val yTransform: (Float) -> Float = { y -> min(1f, max(0f, y / height)) }
+
     Spacer(
         modifier = Modifier
             .fillMaxSize()
             .drawBehind {
                 drawRect(color)
             }
-            .pointerInput(Unit) {
-                awaitEachGesture {
-                    val down = awaitFirstDown()
+            .lightsAndSounds(
+                on = { viewModel.primaryOn() },
+                off = {
+                    color = padStartBackground
+                    viewModel.primaryOff()
+                },
+                lights = { change ->
+                    val u = xTransform(change.position.x)
+                    val v = yTransform(change.position.y)
 
-                    var change = awaitTouchSlopOrCancellation(down.id) { change, _ ->
-                        viewModel.primaryOn()
-                        change.consume()
-                    }
+                    val r = (128 + 128 * (u - 0.5f)).toInt()
+                    val g = (128 + 128 * (v - 0.5f)).toInt()
+                    val b = (128 + 128 * (0.5f - u)).toInt()
 
-                    while (change != null && change.pressed) {
-                        change = awaitDragOrCancellation(change.id)
-
-                        if (change != null && change.pressed) {
-                            with(change.position) {
-                                val u = min(1f, max(0f, x / width))
-                                val v = min(1f, max(0f, y / height))
-
-                                val r = (128 + 128 * (u - 0.5f)).toInt()
-                                val g = (128 + 128 * (v - 0.5f)).toInt()
-                                val b = (128 + 128 * (0.5f - u)).toInt()
-
-                                color = Color(r, g, b)
-
-                                viewModel.primaryXY(ctx, u, v)
-                            }
-                            change.consume()
-                        } else {
-                            color = padStartBackground
-                            viewModel.primaryOff()
-                        }
-                    }
+                    color = Color(r, g, b)
+                },
+                sounds = { x, y ->
+                    viewModel.primaryXY(ctx, xTransform(x), yTransform(y))
                 }
-            }
+            )
     )
 }
