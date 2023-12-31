@@ -5,6 +5,7 @@ import androidx.activity.compose.LocalOnBackPressedDispatcherOwner
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateListOf
@@ -20,7 +21,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.makalaster.etherealdialpad.ui.theme.padStartBackground
+import com.makalaster.etherealdialpad.ui.theme.swarmPadBackground
 import kotlinx.coroutines.android.awaitFrame
 import kotlinx.coroutines.launch
 
@@ -111,8 +112,9 @@ fun SwarmPad(
 
     Canvas(
         modifier = Modifier
+            .padding(horizontal = 4.dp)
             .fillMaxSize()
-            .background(padStartBackground)
+            .background(swarmPadBackground)
             .lightsAndSounds(
                 on = { 
                     viewModel.primaryOn() 

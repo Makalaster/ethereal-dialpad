@@ -8,4 +8,5 @@ val accent = Color(0xFFD81B60)
 
 val blackOverlay = Color(0x66000000)
 
-val padStartBackground = Color(-0xFFbfbfc0)
+val flatPadBackground = Color(-0xFFbfbfc0)
+val swarmPadBackground = Color(-0xefefe0)

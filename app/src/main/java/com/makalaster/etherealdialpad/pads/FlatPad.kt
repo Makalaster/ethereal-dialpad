@@ -4,6 +4,7 @@ import androidx.activity.compose.BackHandler
 import androidx.activity.compose.LocalOnBackPressedDispatcherOwner
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -18,7 +19,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.makalaster.etherealdialpad.ui.theme.padStartBackground
+import com.makalaster.etherealdialpad.ui.theme.flatPadBackground
 import kotlinx.coroutines.android.awaitFrame
 import kotlinx.coroutines.launch
 import kotlin.math.max
@@ -42,7 +43,7 @@ fun FlatPad(
         }
     }
 
-    var color by remember { mutableStateOf(padStartBackground) }
+    var color by remember { mutableStateOf(flatPadBackground) }
 
     val width: Float
     val height: Float
@@ -70,6 +71,7 @@ fun FlatPad(
 
     Spacer(
         modifier = Modifier
+            .padding(horizontal = 4.dp)
             .fillMaxSize()
             .drawBehind {
                 drawRect(color)
@@ -81,7 +83,7 @@ fun FlatPad(
                     color = colorTransform(it.x, it.y)
                 },
                 off = {
-                    color = padStartBackground
+                    color = flatPadBackground
                     viewModel.primaryOff()
                 },
                 lights = { change ->

@@ -1,4 +1,4 @@
-package com.makalaster.etherealdialpad.pads.views
+package com.makalaster.etherealdialpad.pads
 
 import android.content.Context
 import android.graphics.Canvas
@@ -20,10 +20,6 @@ class GridView @JvmOverloads constructor(
         setBackgroundColor(-0xbfbfc0)
     }
     private var synthService: ISynthService? = null
-
-    fun setSynthService(iSynthService: ISynthService?) {
-        synthService = iSynthService
-    }
 
     private var sw = 0
     private var sh:Int = 0

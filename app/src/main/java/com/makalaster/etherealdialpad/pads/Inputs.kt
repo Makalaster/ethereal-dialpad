@@ -1,7 +1,9 @@
 package com.makalaster.etherealdialpad.pads
 
-import androidx.compose.foundation.gestures.detectDragGestures
-import androidx.compose.foundation.gestures.detectTapGestures
+import androidx.compose.foundation.gestures.awaitDragOrCancellation
+import androidx.compose.foundation.gestures.awaitEachGesture
+import androidx.compose.foundation.gestures.awaitFirstDown
+import androidx.compose.foundation.gestures.awaitTouchSlopOrCancellation
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.input.pointer.PointerInputChange
@@ -15,24 +17,31 @@ fun Modifier.lightsAndSounds(
 ) = this.then(
     Modifier
         .pointerInput(Unit) {
-            detectDragGestures(
-                onDragStart = { on(it) },
-                onDragEnd = { off() }
-            ) { change, _ ->
-                lights(change)
-                with(change.position) {
-                    sounds(x, y)
+            awaitEachGesture {
+                val down = awaitFirstDown()
+                on(down.position)
+
+                var change = awaitTouchSlopOrCancellation(down.id) { inputChange, _ ->
+
+                    lights(inputChange)
+                    sounds(inputChange.position.x, inputChange.position.y)
+                    inputChange.consume()
                 }
-            }
-    }
-        .pointerInput(Unit) {
-            detectTapGestures(
-                onPress = {
-                    on(it)
-                    if (tryAwaitRelease()) {
+
+                while (change != null && change.pressed) {
+                    change = awaitDragOrCancellation(change.id)
+
+                    if (change != null && change.pressed) {
+                        lights(change)
+                        sounds(change.position.x, change.position.y)
+
+                        change.consume()
+                    } else {
                         off()
                     }
-                },
-            )
+                }
+
+                off()
+            }
         }
 )
