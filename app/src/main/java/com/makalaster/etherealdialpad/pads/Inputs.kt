@@ -5,12 +5,11 @@ import androidx.compose.foundation.gestures.awaitEachGesture
 import androidx.compose.foundation.gestures.awaitFirstDown
 import androidx.compose.foundation.gestures.awaitTouchSlopOrCancellation
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.input.pointer.PointerInputChange
 import androidx.compose.ui.input.pointer.pointerInput
 
 fun Modifier.lightsAndSounds(
-    on: (Offset) -> Unit,
+    on: (Float, Float) -> Unit,
     off: () -> Unit,
     lights: (PointerInputChange) -> Unit,
     sounds: (Float, Float) -> Unit
@@ -19,7 +18,10 @@ fun Modifier.lightsAndSounds(
         .pointerInput(Unit) {
             awaitEachGesture {
                 val down = awaitFirstDown()
-                on(down.position)
+                down.position.also {
+                    on(it.x, it.y)
+                }
+
 
                 var change = awaitTouchSlopOrCancellation(down.id) { inputChange, _ ->
 

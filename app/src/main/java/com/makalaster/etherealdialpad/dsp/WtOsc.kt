@@ -44,7 +44,7 @@ class WtOsc: UGen() {
         return this
     }
 
-    fun fillWithHardSin(exp: Float): WtOsc? {
+    fun fillWithHardSin(exp: Float): WtOsc {
         val dt = (2.0 * Math.PI / ENTRIES).toFloat()
         for (i in 0 until ENTRIES) {
             table[i] = sin(i * dt).pow(exp)
@@ -53,7 +53,7 @@ class WtOsc: UGen() {
         return this
     }
 
-    fun fillWithZero(): WtOsc? {
+    fun fillWithZero(): WtOsc {
         for (i in 0 until ENTRIES) {
             table[i] = 0f
         }
@@ -61,7 +61,7 @@ class WtOsc: UGen() {
         return this
     }
 
-    fun fillWithSqr(): WtOsc? {
+    fun fillWithSqr(): WtOsc {
         for (i in 0 until ENTRIES) {
             table[i] = if (i < ENTRIES / 2) 1f else -1f
         }
@@ -69,7 +69,7 @@ class WtOsc: UGen() {
         return this
     }
 
-    fun fillWithSqrDuty(fraction: Float): WtOsc? {
+    fun fillWithSqrDuty(fraction: Float): WtOsc {
         for (i in 0 until ENTRIES) {
             table[i] = if (i.toFloat() / ENTRIES < fraction) 1f else -1f
         }
@@ -77,7 +77,7 @@ class WtOsc: UGen() {
         return this
     }
 
-    fun fillWithSaw(): WtOsc? {
+    fun fillWithSaw(): WtOsc {
         val dt = (2.0 / ENTRIES).toFloat()
         for (i in 0 until ENTRIES) {
             table[i] = 1.0f - i * dt

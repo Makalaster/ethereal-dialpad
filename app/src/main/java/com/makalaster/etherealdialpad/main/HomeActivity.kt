@@ -12,7 +12,9 @@ import androidx.navigation.compose.rememberNavController
 import com.makalaster.etherealdialpad.navigation.EtherealDialpadNavHost
 import com.makalaster.etherealdialpad.prefs.SettingsActivity
 import com.makalaster.etherealdialpad.ui.theme.EtherealDialpadTheme
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class HomeActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

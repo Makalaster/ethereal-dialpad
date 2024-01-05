@@ -7,7 +7,7 @@ import android.media.AudioManager
 import android.media.AudioTrack
 import kotlin.math.max
 
-class Dac: UGen() {
+class Dac : UGen() {
     private var localBuffer = FloatArray(CHUNK_SIZE)
     private var isClean = false
     private var track: AudioTrack
@@ -64,6 +64,10 @@ class Dac: UGen() {
             }
             track.write(target, 0, target.size)
         }
+    }
+
+    fun pause() {
+        track.pause()
     }
 
     fun close() {

@@ -1,56 +1,36 @@
-package com.makalaster.etherealdialpad.pads
+package com.makalaster.etherealdialpad.pads.draw
 
-import androidx.activity.compose.BackHandler
-import androidx.activity.compose.LocalOnBackPressedDispatcherOwner
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.BottomSheetScaffold
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.mutableStateListOf
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.platform.LocalConfiguration
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import kotlinx.coroutines.android.awaitFrame
-import kotlinx.coroutines.launch
+import com.makalaster.etherealdialpad.pads.Line
+import com.makalaster.etherealdialpad.pads.lightsAndSounds
+import com.makalaster.etherealdialpad.prefs.PreferencesBottomSheet
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DrawPad(
-    viewModel: PadViewModel = viewModel()
+    viewModel: DrawViewModel = viewModel()
 ) {
-    val onBackPressedDispatcher = LocalOnBackPressedDispatcherOwner.current?.onBackPressedDispatcher
-    var backPressHandled by remember { mutableStateOf(false) }
-    val coroutineScope = rememberCoroutineScope()
-
-    BackHandler(enabled = !backPressHandled) {
-        viewModel.primaryOff()
-        backPressHandled = true
-        coroutineScope.launch {
-            awaitFrame()
-            onBackPressedDispatcher?.onBackPressed()
-            backPressHandled = false
-        }
-    }
-
     val width: Float
     val height: Float
     LocalConfiguration.current.let {
         width = with(LocalDensity.current) { it.screenWidthDp.dp.toPx() }
         height = with(LocalDensity.current) { it.screenHeightDp.dp.toPx() }
     }
-
-    val ctx = LocalContext.current
-    viewModel.refreshPrefs(ctx)
 
 //    var currentPosition by remember { mutableStateOf(Offset.Unspecified) }
 //
@@ -65,28 +45,39 @@ fun DrawPad(
         mutableStateListOf<Line>()
     }
 
-    Canvas(
-        modifier = Modifier
-            .padding(horizontal = 4.dp)
-            .fillMaxSize()
-            .background(Color.Black)
-            .lightsAndSounds(
-                on = {
-                    viewModel.primaryOn()
-                    viewModel.primaryXY(ctx, it.x / width, 1 - it.y / height)
-                },
-                off = {
-                    viewModel.primaryOff()
-                    lines.clear()
-                },
-                lights = { change ->
-                    val line = Line(change.previousPosition, change.position, strokeWidth = 10.dp)
-                    lines.add(line)
-                },
-                sounds = { x, y ->
-                    viewModel.primaryXY(ctx, x / width, 1 - y / height)
+    val state = viewModel.drawPrefsFlow.collectAsState()
+
+    BottomSheetScaffold(
+        sheetContent = {
+            PreferencesBottomSheet(
+                prefState = state.value,
+                onCheckedChange = { key, checked ->
+                    viewModel.updateDrawPref(key, checked)
                 }
             )
+        }
+    ) {
+        Canvas(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(Color.Black)
+                .lightsAndSounds(
+                    on = { x, y ->
+                        viewModel.primaryOn()
+                        viewModel.primaryXY(viewModel.xTransform(x, width), viewModel.yTransform(y, height))
+                    },
+                    off = {
+                        viewModel.primaryOff()
+                        lines.clear()
+                    },
+                    lights = { change ->
+                        val line = Line(change.previousPosition, change.position, strokeWidth = 10.dp)
+                        lines.add(line)
+                    },
+                    sounds = { x, y ->
+                        viewModel.primaryXY(viewModel.xTransform(x, width), viewModel.yTransform(y, height))
+                    }
+                )
 //            .pointerInput(Unit) {
 //                awaitEachGesture {
 //                    val down = awaitFirstDown()
@@ -146,21 +137,22 @@ fun DrawPad(
 //                    }
 //                }
 //            }
-    ) {
-        // TODO: allow toggle between fixed length and max segments
-        // TODO: allow adjusting max segment count
-        if (lines.size > 60) {
-            lines.removeAt(0)
-        }
+        ) {
+            // TODO: allow toggle between fixed length and max segments
+            // TODO: allow adjusting max segment count
+            if (lines.size > 60) {
+                lines.removeAt(0)
+            }
 
-        lines.forEach { line ->
-            drawLine(
-                color = line.color,
-                start = line.start,
-                end = line.end,
-                strokeWidth = line.strokeWidth.toPx(),
-                cap = StrokeCap.Round
-            )
+            lines.forEach { line ->
+                drawLine(
+                    color = line.color,
+                    start = line.start,
+                    end = line.end,
+                    strokeWidth = line.strokeWidth.toPx(),
+                    cap = StrokeCap.Round
+                )
+            }
         }
     }
 }

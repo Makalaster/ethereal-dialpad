@@ -28,9 +28,9 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.makalaster.etherealdialpad.R
-import com.makalaster.etherealdialpad.navigation.FlatPad
 import com.makalaster.etherealdialpad.navigation.DrawPad
 import com.makalaster.etherealdialpad.navigation.EtherealDialpadDestination
+import com.makalaster.etherealdialpad.navigation.FlatPad
 import com.makalaster.etherealdialpad.navigation.GridPad
 import com.makalaster.etherealdialpad.navigation.SwarmPad
 import com.makalaster.etherealdialpad.ui.theme.EtherealDialpadTheme
