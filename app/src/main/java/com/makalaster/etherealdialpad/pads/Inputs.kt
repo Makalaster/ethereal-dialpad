@@ -22,7 +22,6 @@ fun Modifier.lightsAndSounds(
                     on(it.x, it.y)
                 }
 
-
                 var change = awaitTouchSlopOrCancellation(down.id) { inputChange, _ ->
 
                     lights(inputChange)

@@ -1,6 +1,5 @@
 package com.makalaster.etherealdialpad.main
 
-import android.content.Intent
 import android.os.Bundle
 import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
@@ -10,7 +9,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.rememberNavController
 import com.makalaster.etherealdialpad.navigation.EtherealDialpadNavHost
-import com.makalaster.etherealdialpad.prefs.SettingsActivity
 import com.makalaster.etherealdialpad.ui.theme.EtherealDialpadTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -20,32 +18,20 @@ class HomeActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         setContent {
-            EtherealDialpadApp(
-                ::goToSettings
-            )
+            EtherealDialpadApp()
         }
-    }
-
-    private fun goToSettings() {
-        startActivity(
-            Intent(this, SettingsActivity::class.java)
-                .putExtra(SettingsActivity.PREFERENCE_PANE, SettingsActivity.SYNTH_PREFERENCES)
-        )
     }
 }
 
 @Composable
-fun EtherealDialpadApp(
-    onSettingsClick: () -> Unit
-) {
+fun EtherealDialpadApp() {
     val navController = rememberNavController()
     EtherealDialpadTheme {
         Surface(
             modifier = Modifier.fillMaxSize()
         ) {
             EtherealDialpadNavHost(
-                navController = navController,
-                onSettingsClick
+                navController = navController
             )
         }
     }

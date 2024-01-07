@@ -17,8 +17,7 @@ import com.makalaster.etherealdialpad.pads.swarm.SwarmViewModel
 
 @Composable
 fun EtherealDialpadNavHost(
-    navController: NavHostController,
-    onSettingsClick: () -> Unit
+    navController: NavHostController
 ) {
     NavHost(
         navController = navController,
@@ -27,8 +26,7 @@ fun EtherealDialpadNavHost(
     ) {
         composable(route = Home.route) {
             HomeView(
-                onPadClick = navController::navigateSingleTopTo,
-                onSettingsClick = onSettingsClick
+                onPadClick = navController::navigateSingleTopTo
             )
         }
         composable(route = FlatPad.route) {

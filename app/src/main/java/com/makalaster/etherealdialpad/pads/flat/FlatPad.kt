@@ -33,14 +33,17 @@ fun FlatPad(
     }
 
     var color by remember { mutableStateOf(flatPadBackground) }
-    val state = viewModel.flatPrefsFlow.collectAsState()
+    val state = viewModel.flow.collectAsState()
 
     BottomSheetScaffold(
         sheetContent = {
             PreferencesBottomSheet(
                 state.value,
                 onCheckedChange = { key, checked ->
-                    viewModel.updateFlatPref(key, checked)
+                    viewModel.updateBooleanPref(key, checked)
+                },
+                onSelectionChanged = { key, selected ->
+                    viewModel.updateStringPref(key, selected)
                 }
             )
         }

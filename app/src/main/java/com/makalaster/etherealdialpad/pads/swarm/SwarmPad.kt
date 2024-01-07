@@ -46,7 +46,7 @@ fun SwarmPad(
         mutableStateOf(false)
     }
 
-    val state = viewModel.swarmPrefsFlow.collectAsState()
+    val state = viewModel.flow.collectAsState()
 
     var targetX by remember {
         mutableFloatStateOf(0f)
@@ -105,7 +105,10 @@ fun SwarmPad(
             PreferencesBottomSheet(
                 prefState = state.value,
                 onCheckedChange = { key, value ->
-                    viewModel.updateSwarmPref(key, value)
+                    viewModel.updateBooleanPref(key, value)
+                },
+                onSelectionChanged = { key, selection ->
+                    viewModel.updateStringPref(key, selection)
                 }
             )
         }

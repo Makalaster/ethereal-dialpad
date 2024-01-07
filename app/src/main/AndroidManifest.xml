@@ -9,11 +9,6 @@
             android:roundIcon="@drawable/icon"
             android:supportsRtl="true"
             android:theme="@style/AppTheme">
-        <activity
-                android:name=".prefs.SettingsActivity"
-                android:label="@string/title_activity_synth_settings">
-
-        </activity>
 
         <activity android:name=".main.HomeActivity"
                 android:exported="true">

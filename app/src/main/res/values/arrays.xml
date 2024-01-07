@@ -1,39 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string-array name="quantizer_entries">
-        <item>Chromatic</item>
-        <item>Major</item>
-        <item>Minor</item>
-        <item>Pentatonic</item>
-        <item>Pentatonic2</item>
-        <item>Octave</item>
-        <item>Theremin</item>
-    </string-array>
 
-    <string-array name="quantizer_values">
-        <item>0,1,2,3,4,5,6,7,8,9,10,11</item>
-        <item>0,2,4,5,7,9,11</item>
-        <item>0,2,3,5,7,8,11</item>
-        <item>0,2,4,7,9</item>
-        <item>1,4,6,9,11</item>
-        <item>0</item>
-        <item></item>
-    </string-array>
-
-    <string-array name="octaves_both">
-        <item>1</item>
-        <item>2</item>
-        <item>3</item>
-        <item>4</item>
-    </string-array>
-    <!-- Reply Preference -->
-    <string-array name="reply_entries">
-        <item>Reply</item>
-        <item>Reply to all</item>
-    </string-array>
-
-    <string-array name="reply_values">
-        <item>reply</item>
-        <item>reply_all</item>
-    </string-array>
 </resources>

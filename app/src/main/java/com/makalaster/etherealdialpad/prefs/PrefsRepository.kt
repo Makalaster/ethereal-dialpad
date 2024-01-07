@@ -7,6 +7,7 @@ import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.emptyPreferences
 import androidx.datastore.preferences.core.stringPreferencesKey
 import com.makalaster.etherealdialpad.pads.PadSettings
+import com.makalaster.etherealdialpad.pads.toQuantizer
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.map
@@ -27,7 +28,7 @@ class PrefsRepository @Inject constructor(
         }
         .map { prefs ->
             PadSettings(
-                quantizer = prefs[stringPreferencesKey(pad + SynthPrefs.QUANTIZER)] ?: "1,4,6,9,11",
+                quantizer = (prefs[stringPreferencesKey(pad + SynthPrefs.QUANTIZER)] ?: PadSettings.PitchQuantizer.PENTATONIC2.quantizerName).toQuantizer(),
                 octaves = prefs[stringPreferencesKey(pad + SynthPrefs.OCTAVES)] ?: "3",
                 delay = prefs[booleanPreferencesKey(pad + SynthPrefs.DELAY)] ?: true,
                 flange = prefs[booleanPreferencesKey(pad + SynthPrefs.FLANGE)] ?: false,
@@ -36,6 +37,12 @@ class PrefsRepository @Inject constructor(
                 duet = prefs[booleanPreferencesKey(pad + SynthPrefs.DUET)] ?: true
             )
         }
+
+    suspend fun setStringPref(pad: String, pref: String, selection: String) {
+        dataStore.edit {
+            it[stringPreferencesKey(pad + pref)] = selection
+        }
+    }
 
     suspend fun setBooleanPref(pad: String, pref: String, value: Boolean) {
         dataStore.edit {

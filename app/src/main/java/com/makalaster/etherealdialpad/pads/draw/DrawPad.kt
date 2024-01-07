@@ -45,14 +45,17 @@ fun DrawPad(
         mutableStateListOf<Line>()
     }
 
-    val state = viewModel.drawPrefsFlow.collectAsState()
+    val state = viewModel.flow.collectAsState()
 
     BottomSheetScaffold(
         sheetContent = {
             PreferencesBottomSheet(
                 prefState = state.value,
                 onCheckedChange = { key, checked ->
-                    viewModel.updateDrawPref(key, checked)
+                    viewModel.updateBooleanPref(key, checked)
+                },
+                onSelectionChanged = { key, selection ->
+                    viewModel.updateStringPref(key, selection)
                 }
             )
         }

@@ -107,7 +107,7 @@ class Synth {
     }
 
     fun primaryXY(x: Float, y: Float) {
-        val scale = buildScale(settings.quantizer)
+        val scale = buildScale(settings.quantizer.value)
         val octaves = settings.octaves.toInt()
 
         ugOscA1.setFreq(buildFrequency(scale, octaves, x))

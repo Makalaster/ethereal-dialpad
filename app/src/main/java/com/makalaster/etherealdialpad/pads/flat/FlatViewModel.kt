@@ -11,14 +11,15 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 import kotlin.math.max
 import kotlin.math.min
 
 @HiltViewModel
 class FlatViewModel @Inject constructor(repo: PrefsRepository, synth: Synth) : PadViewModel(repo, synth) {
-    val flatPrefsFlow = prefsRepo.prefsFlow(Preferences.FLAT_PREFS).map {
+    override val pad: String = Preferences.FLAT_PREFS
+
+    override val flow = prefsRepo.prefsFlow(Preferences.FLAT_PREFS).map {
         synth.refreshSettings(it)
         it
     }.stateIn(
@@ -26,12 +27,6 @@ class FlatViewModel @Inject constructor(repo: PrefsRepository, synth: Synth) : P
         SharingStarted.WhileSubscribed(5_000),
         PadSettings()
     )
-
-    fun updateFlatPref(pref: String, value: Boolean) {
-        viewModelScope.launch {
-            prefsRepo.setBooleanPref(Preferences.FLAT_PREFS, pref, value)
-        }
-    }
 
     fun transform(point: Float, dimen: Float): Float = min(1f, max(0f, point / dimen))
 

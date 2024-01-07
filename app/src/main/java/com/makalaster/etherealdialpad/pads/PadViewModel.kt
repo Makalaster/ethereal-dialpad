@@ -4,18 +4,19 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.makalaster.etherealdialpad.dsp.Synth
 import com.makalaster.etherealdialpad.prefs.PrefsRepository
-import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
-@HiltViewModel
-open class PadViewModel @Inject constructor(
+abstract class PadViewModel(
     protected val prefsRepo: PrefsRepository,
     protected val synth: Synth
 ) : ViewModel() {
     private var job: Job? = null
+
+    protected abstract val pad: String
+    abstract val flow: StateFlow<PadSettings>
 
     init {
         synth.start()
@@ -57,6 +58,18 @@ open class PadViewModel @Inject constructor(
 //    fun secondaryOff() {
 //        ugEnvB.setActive(false)
 //    }
+
+    fun updateBooleanPref(pref: String, value: Boolean) {
+        viewModelScope.launch {
+            prefsRepo.setBooleanPref(pad, pref, value)
+        }
+    }
+
+    fun updateStringPref(pref: String, selection: String) {
+        viewModelScope.launch {
+            prefsRepo.setStringPref(pad, pref, selection)
+        }
+    }
 
     override fun onCleared() {
         job?.cancel()
