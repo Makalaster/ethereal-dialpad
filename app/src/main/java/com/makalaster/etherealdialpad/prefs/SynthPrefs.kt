@@ -30,14 +30,13 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.makalaster.etherealdialpad.Constants.Preferences
 import com.makalaster.etherealdialpad.R
-import com.makalaster.etherealdialpad.pads.PadSettings
 import com.makalaster.etherealdialpad.ui.theme.EtherealDialpadTheme
 
 @Composable
 fun PreferencesBottomSheet(
     prefState: PadSettings,
-    onCheckedChange: (String, Boolean) -> Unit = { _, _ -> },
-    onSelectionChanged: (String, String) -> Unit = { _, _ -> }
+    onCheckedChange: (String, Boolean) -> Unit,
+    onSelectionChanged: (String, String) -> Unit
 ) {
     Column(
         modifier = Modifier
@@ -186,6 +185,10 @@ fun ExpandableRadioGroup(
 @Composable
 fun PreferencesPreview() {
     EtherealDialpadTheme {
-        PreferencesBottomSheet(PadSettings())
+        PreferencesBottomSheet(
+            PadSettings(),
+            { _, _ -> },
+            { _, _ -> }
+        )
     }
 }

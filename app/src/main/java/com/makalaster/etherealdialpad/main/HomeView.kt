@@ -28,7 +28,6 @@ import com.makalaster.etherealdialpad.R
 import com.makalaster.etherealdialpad.navigation.DrawPad
 import com.makalaster.etherealdialpad.navigation.EtherealDialpadDestination
 import com.makalaster.etherealdialpad.navigation.FlatPad
-import com.makalaster.etherealdialpad.navigation.GridPad
 import com.makalaster.etherealdialpad.navigation.SwarmPad
 import com.makalaster.etherealdialpad.ui.theme.EtherealDialpadTheme
 
@@ -75,8 +74,8 @@ fun HomeContent(
         PadItem(DrawPad, onPadClick)
         Spacer(modifier = Modifier.height(12.dp))
         PadItem(SwarmPad, onPadClick)
-        Spacer(modifier = Modifier.height(12.dp))
-        PadItem(GridPad, onPadClick)
+//        Spacer(modifier = Modifier.height(12.dp))
+//        PadItem(GridPad, onPadClick)
     }
 }
 

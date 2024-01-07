@@ -3,6 +3,7 @@ package com.makalaster.etherealdialpad.pads
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.makalaster.etherealdialpad.dsp.Synth
+import com.makalaster.etherealdialpad.prefs.PadSettings
 import com.makalaster.etherealdialpad.prefs.PrefsRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job

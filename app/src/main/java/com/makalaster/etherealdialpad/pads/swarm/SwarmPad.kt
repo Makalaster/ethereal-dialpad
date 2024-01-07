@@ -3,10 +3,7 @@ package com.makalaster.etherealdialpad.pads.swarm
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.BottomSheetScaffold
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.mutableStateListOf
@@ -16,28 +13,19 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalConfiguration
-import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.makalaster.etherealdialpad.Constants
 import com.makalaster.etherealdialpad.pads.Line
 import com.makalaster.etherealdialpad.pads.lightsAndSounds
-import com.makalaster.etherealdialpad.prefs.PreferencesBottomSheet
 import com.makalaster.etherealdialpad.ui.theme.swarmPadBackground
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SwarmPad(
-    viewModel: SwarmViewModel = viewModel()
+    viewModel: SwarmViewModel = viewModel(),
+    width: Float,
+    height: Float
 ) {
-    val width: Float
-    val height: Float
-    LocalConfiguration.current.let {
-        width = with(LocalDensity.current) { it.screenWidthDp.dp.toPx() }
-        height = with(LocalDensity.current) { it.screenHeightDp.dp.toPx() }
-    }
-
     val sparks = remember {
         mutableStateListOf<Line>()
     }
@@ -45,8 +33,6 @@ fun SwarmPad(
     var isTouching by remember {
         mutableStateOf(false)
     }
-
-    val state = viewModel.flow.collectAsState()
 
     var targetX by remember {
         mutableFloatStateOf(0f)
@@ -100,58 +86,44 @@ fun SwarmPad(
         }
     }
 
-    BottomSheetScaffold(
-        sheetContent = {
-            PreferencesBottomSheet(
-                prefState = state.value,
-                onCheckedChange = { key, value ->
-                    viewModel.updateBooleanPref(key, value)
-                },
-                onSelectionChanged = { key, selection ->
-                    viewModel.updateStringPref(key, selection)
-                }
-            )
-        }
-    ) {
-        Canvas(
-            modifier = Modifier
-                .fillMaxSize()
-                .background(swarmPadBackground)
-                .lightsAndSounds(
-                    on = { x, y ->
-                        viewModel.primaryOn()
-                        isTouching = true
+    Canvas(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(swarmPadBackground)
+            .lightsAndSounds(
+                on = { x, y ->
+                    viewModel.primaryOn()
+                    isTouching = true
 
+                    targetX = x
+                    targetY = y
+
+                    viewModel.primaryXY(targetX / width, 1 - targetY / height)
+                },
+                off = {
+                    viewModel.primaryOff()
+                    isTouching = false
+                },
+                lights = { change ->
+                    with(change.position) {
                         targetX = x
                         targetY = y
-
-                        viewModel.primaryXY(targetX / width, 1 - targetY / height)
-                    },
-                    off = {
-                        viewModel.primaryOff()
-                        isTouching = false
-                    },
-                    lights = { change ->
-                        with(change.position) {
-                            targetX = x
-                            targetY = y
-                        }
-                    },
-                    sounds = { x, y ->
-                        viewModel.primaryXY(x / width, 1 - y / height)
                     }
-                )
-        ) {
-            sparkle()
+                },
+                sounds = { x, y ->
+                    viewModel.primaryXY(x / width, 1 - y / height)
+                }
+            )
+    ) {
+        sparkle()
 
-            sparks.forEach { spark ->
-                drawLine(
-                    color = spark.color,
-                    start = spark.start,
-                    end = spark.end,
-                    strokeWidth = spark.strokeWidth.toPx()
-                )
-            }
+        sparks.forEach { spark ->
+            drawLine(
+                color = spark.color,
+                start = spark.start,
+                end = spark.end,
+                strokeWidth = spark.strokeWidth.toPx()
+            )
         }
     }
 }

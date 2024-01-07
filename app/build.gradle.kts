@@ -13,8 +13,8 @@ android {
         applicationId = "com.makalaster.etherealdialpad"
         minSdk = 26
         targetSdk = 34
-        versionCode = 3
-        versionName = "0.9"
+        versionCode = 4
+        versionName = "0.10"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {

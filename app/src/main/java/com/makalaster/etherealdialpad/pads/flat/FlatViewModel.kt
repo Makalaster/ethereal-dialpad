@@ -4,7 +4,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.viewModelScope
 import com.makalaster.etherealdialpad.Constants.Preferences
 import com.makalaster.etherealdialpad.dsp.Synth
-import com.makalaster.etherealdialpad.pads.PadSettings
+import com.makalaster.etherealdialpad.prefs.PadSettings
 import com.makalaster.etherealdialpad.pads.PadViewModel
 import com.makalaster.etherealdialpad.prefs.PrefsRepository
 import dagger.hilt.android.lifecycle.HiltViewModel

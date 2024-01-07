@@ -40,10 +40,4 @@ object GridPad: EtherealDialpadDestination {
     override val route = "grid_pad"
 }
 
-object Settings: EtherealDialpadDestination {
-    @DrawableRes override val iconId = 0
-    @StringRes override val nameId = 0
-    override val route = "settings"
-}
-
-val pads = listOf(FlatPad, DrawPad, SwarmPad, GridPad)
+val pads = listOf(FlatPad, DrawPad, SwarmPad)

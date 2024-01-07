@@ -1,6 +1,6 @@
 package com.makalaster.etherealdialpad.dsp
 
-import com.makalaster.etherealdialpad.pads.PadSettings
+import com.makalaster.etherealdialpad.prefs.PadSettings
 import kotlin.math.max
 import kotlin.math.min
 import kotlin.math.pow

@@ -1,4 +1,4 @@
-package com.makalaster.etherealdialpad.pads
+package com.makalaster.etherealdialpad.prefs
 
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf

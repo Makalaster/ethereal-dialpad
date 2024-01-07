@@ -1,4 +1,4 @@
-package com.makalaster.etherealdialpad.pads
+package com.makalaster.etherealdialpad.pads.grid
 
 import android.content.Context
 import android.graphics.Canvas
@@ -8,7 +8,6 @@ import android.os.RemoteException
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.SurfaceView
-import com.makalaster.etherealdialpad.dsp.ISynthService
 
 class GridView @JvmOverloads constructor(
     context: Context,
