@@ -6,11 +6,11 @@ plugins {
 }
 
 android {
-    namespace = "com.makalaster.etherealdialpad"
+    namespace = "com.makalaster.ethereal_dialpad"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.makalaster.etherealdialpad"
+        applicationId = "com.makalaster.ethereal_dialpad"
         minSdk = 26
         targetSdk = 34
         versionCode = 5
