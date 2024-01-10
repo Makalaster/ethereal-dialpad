@@ -17,7 +17,8 @@ import com.makalaster.ethereal_dialpad.ui.theme.flatPadBackground
 fun FlatPad(
     viewModel: FlatViewModel = viewModel(),
     width: Float,
-    height: Float
+    height: Float,
+    onTap: () -> Unit
 ) {
     var color by remember { mutableStateOf(flatPadBackground) }
 
@@ -39,6 +40,9 @@ fun FlatPad(
                 off = {
                     color = flatPadBackground
                     viewModel.primaryOff()
+                },
+                tap = {
+                    onTap()
                 },
                 lights = { change ->
                     color = viewModel.colorTransform(change.position.x, width, change.position.y, height)

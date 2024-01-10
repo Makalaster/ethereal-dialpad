@@ -18,7 +18,8 @@ import com.makalaster.ethereal_dialpad.pads.lightsAndSounds
 fun DrawPad(
     viewModel: DrawViewModel = viewModel(),
     width: Float,
-    height: Float
+    height: Float,
+    onTap: () -> Unit
 ) {
 //    var currentPosition by remember { mutableStateOf(Offset.Unspecified) }
 //
@@ -45,6 +46,9 @@ fun DrawPad(
                 off = {
                     viewModel.primaryOff()
                     lines.clear()
+                },
+                tap = {
+                      onTap()
                 },
                 lights = { change ->
                     val line = Line(change.previousPosition, change.position, strokeWidth = 10.dp)

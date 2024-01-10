@@ -30,18 +30,18 @@ fun EtherealDialpadNavHost(
             )
         }
         composable(route = FlatPad.route) {
-            Pad(viewModel = hiltViewModel<FlatViewModel>()) { width, height ->
-                FlatPad(width = width, height = height)
+            Pad(viewModel = hiltViewModel<FlatViewModel>()) { _, width, height, onTap ->
+                FlatPad(width = width, height = height, onTap = onTap)
             }
         }
         composable(route = DrawPad.route) {
-            Pad(viewModel = hiltViewModel<DrawViewModel>()) { width, height ->
-                DrawPad(width = width, height = height)
+            Pad(viewModel = hiltViewModel<DrawViewModel>()) { _, width, height, onTap ->
+                DrawPad(width = width, height = height, onTap = onTap)
             }
         }
         composable(route = SwarmPad.route) {
-            Pad(hiltViewModel<SwarmViewModel>()) {width, height ->
-                SwarmPad(width = width, height = height)
+            Pad(hiltViewModel<SwarmViewModel>()) { _, width, height, onTap ->
+                SwarmPad(width = width, height = height, onTap = onTap)
             }
         }
 //        composable(route = GridPad.route) {

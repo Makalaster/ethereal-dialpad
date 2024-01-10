@@ -24,7 +24,8 @@ import com.makalaster.ethereal_dialpad.ui.theme.swarmPadBackground
 fun SwarmPad(
     viewModel: SwarmViewModel = viewModel(),
     width: Float,
-    height: Float
+    height: Float,
+    onTap: () -> Unit
 ) {
     val sparks = remember {
         mutableStateListOf<Line>()
@@ -103,6 +104,9 @@ fun SwarmPad(
                 off = {
                     viewModel.primaryOff()
                     isTouching = false
+                },
+                tap = {
+                      onTap()
                 },
                 lights = { change ->
                     with(change.position) {
