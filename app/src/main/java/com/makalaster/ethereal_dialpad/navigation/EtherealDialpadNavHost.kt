@@ -17,31 +17,40 @@ import com.makalaster.ethereal_dialpad.pads.swarm.SwarmViewModel
 
 @Composable
 fun EtherealDialpadNavHost(
-    navController: NavHostController
+    navController: NavHostController,
+    toggleSystemBars: (Boolean) -> Unit
 ) {
     NavHost(
         navController = navController,
         startDestination = Home.route,
-        modifier = Modifier
+        modifier = Modifier,
     ) {
         composable(route = Home.route) {
             HomeView(
                 onPadClick = navController::navigateSingleTopTo
             )
+            toggleSystemBars(true)
         }
         composable(route = FlatPad.route) {
             Pad(viewModel = hiltViewModel<FlatViewModel>()) { _, width, height, onTap ->
                 FlatPad(width = width, height = height, onTap = onTap)
+                toggleSystemBars(false)
             }
         }
         composable(route = DrawPad.route) {
             Pad(viewModel = hiltViewModel<DrawViewModel>()) { _, width, height, onTap ->
-                DrawPad(width = width, height = height, onTap = onTap)
+                DrawPad(width = width, height = height, onTap = {
+                    onTap()
+                })
+                toggleSystemBars(false)
             }
         }
         composable(route = SwarmPad.route) {
-            Pad(hiltViewModel<SwarmViewModel>()) { _, width, height, onTap ->
-                SwarmPad(width = width, height = height, onTap = onTap)
+            Pad(viewModel = hiltViewModel<SwarmViewModel>()) { _, width, height, onTap ->
+                SwarmPad(width = width, height = height, onTap = {
+                    onTap()
+                })
+                toggleSystemBars(false)
             }
         }
 //        composable(route = GridPad.route) {
