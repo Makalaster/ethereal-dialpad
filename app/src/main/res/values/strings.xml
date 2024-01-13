@@ -11,9 +11,9 @@
     <string name="draw_pad">Draw Pad</string>
     <string name="swarm_pad">Swarm Pad</string>
 
-    <string name="basicpad_label">Flat: A simple background panel tastefully shifts in hue.</string>
-    <string name="trailpad_label">Draw: Glowing light trails follow you around the pad.</string>
-    <string name="pointpad_label">Swarm: A curious cloud of energetic particles.</string>
+    <string name="basicpad_label">A simple background panel that tastefully shifts in hue.</string>
+    <string name="trailpad_label">Glowing light trails follow you around the pad.</string>
+    <string name="pointpad_label">A curious cloud of energetic particles.</string>
     <string name="gridpad_label">Moonblink\'s Grid: A hue-shifting background overlaid with strings.</string>
 
     <string name="pref_quantizer">Pitch quantizer</string>
