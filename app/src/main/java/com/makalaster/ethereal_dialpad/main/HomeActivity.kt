@@ -19,9 +19,10 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class HomeActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
-//        enableEdgeToEdge()
-
         super.onCreate(savedInstanceState)
+
+        WindowCompat.getInsetsController(window, window.decorView).systemBarsBehavior =
+            WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
 
         setContent {
             EtherealDialpadApp(
@@ -32,8 +33,6 @@ class HomeActivity : AppCompatActivity() {
 
     private fun toggleSystemBars(show: Boolean) {
         val windowInsetsController = WindowCompat.getInsetsController(window, window.decorView)
-
-        windowInsetsController.systemBarsBehavior = WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
 
         window.decorView.setOnApplyWindowInsetsListener { view, insets ->
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
