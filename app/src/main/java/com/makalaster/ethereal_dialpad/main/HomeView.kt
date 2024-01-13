@@ -1,5 +1,6 @@
 package com.makalaster.ethereal_dialpad.main
 
+import android.content.res.Configuration
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -48,7 +49,8 @@ fun HomeView(
                 ),
                 title = {
                     Text(
-                        stringResource(id = R.string.app_name),
+                        style = MaterialTheme.typography.headlineMedium,
+                        text = stringResource(id = R.string.app_name),
                         color = Color.Black
                     )
                 }
@@ -69,19 +71,7 @@ fun HomeContent(
             .fillMaxWidth()
             .padding(vertical = 8.dp)
     ) {
-        Text(
-            text = stringResource(id = R.string.app_desc),
-            modifier = Modifier.padding(horizontal = 8.dp)
-        )
-
         Spacer(modifier = Modifier.height(8.dp))
-
-        Text(
-            text = stringResource(id = R.string.select_dialpad),
-            modifier = Modifier.padding(horizontal = 8.dp)
-        )
-
-        Spacer(modifier = Modifier.height(12.dp))
 
         PadItem(FlatPad, onPadClick)
 
@@ -116,9 +106,10 @@ fun PadItem(
     Column(
         modifier = Modifier
             .padding(horizontal = 8.dp)
+            .clickable { onPadClick(pad.route) }
     ) {
         Text(
-            style = MaterialTheme.typography.headlineSmall,
+            style = MaterialTheme.typography.titleLarge,
             text = stringResource(id = pad.nameId)
         )
 
@@ -126,8 +117,7 @@ fun PadItem(
 
         Row(
             verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(8.dp),
-            modifier = Modifier.clickable { onPadClick(pad.route) }
+            horizontalArrangement = Arrangement.spacedBy(8.dp)
         ) {
             Image(
                 painter = painterResource(id = pad.iconId),
@@ -154,7 +144,14 @@ fun PadItemPreview() {
     }
 }
 
-@Preview
+@Preview(
+    name = "Home Light",
+    uiMode = Configuration.UI_MODE_NIGHT_NO
+)
+@Preview(
+    name = "Home Dark",
+    uiMode = Configuration.UI_MODE_NIGHT_YES
+)
 @Composable
 fun HomeViewPreview() {
     EtherealDialpadTheme {
