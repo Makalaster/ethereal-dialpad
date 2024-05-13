@@ -12,9 +12,9 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.KeyboardArrowRight
-import androidx.compose.material3.Divider
+import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
@@ -75,21 +75,21 @@ fun HomeContent(
 
         PadItem(FlatPad, onPadClick)
 
-        Divider(
+        HorizontalDivider(
             thickness = 2.dp,
             modifier = Modifier.padding(vertical = 12.dp)
         )
 
         PadItem(DrawPad, onPadClick)
 
-        Divider(
+        HorizontalDivider(
             thickness = 2.dp,
             modifier = Modifier.padding(vertical = 12.dp)
         )
 
         PadItem(SwarmPad, onPadClick)
 
-        Divider(
+        HorizontalDivider(
             thickness = 2.dp,
             modifier = Modifier.padding(vertical = 12.dp)
         )
@@ -129,7 +129,7 @@ fun PadItem(
                 modifier = Modifier.weight(1f)
             )
             Icon(
-                imageVector = Icons.Filled.KeyboardArrowRight,
+                imageVector = Icons.AutoMirrored.Filled.KeyboardArrowRight,
                 contentDescription = "Open"
             )
         }
