@@ -49,8 +49,8 @@ fun GridPad(
     val nx = scale.size * state.octaves.toInt() + 1
     val ny = if (state.duet) nx else 0
 
-    fun noteColor(n: Float) = Color(
-        n / 12f,
+    fun noteColor(n: Float) = Color.hsv(
+        n / 12f * 300,
         if (n == 0f) 0f else 1f,
         1f
     )
@@ -72,9 +72,12 @@ fun GridPad(
             .fillMaxSize()
             .background(gridPadBackground)
             .lightsAndSounds(
-                on = { _, _ ->
+                on = { x, y ->
                     viewModel.primaryOn()
                     touching = true
+
+                    targetX = x / width
+                    targetY = 1f - y / with(currentDensity) { currentConfig.screenHeightDp.dp.toPx() }
                 },
                 off = {
                     viewModel.primaryOff()
@@ -105,7 +108,7 @@ fun GridPad(
                 radius = size.width / (2 * nx).toFloat(),
                 center = Offset(
                     x = size.width * (.5f + (targetX * nx).toInt()) / nx,
-                    y = if (state.duet) size.height * (.5f + ((1f - targetY) * ny)) / ny else (1 - targetY) * size.height
+                    y = (1 - targetY) * size.height
                 )
             )
         }
