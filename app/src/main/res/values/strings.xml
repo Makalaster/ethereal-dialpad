@@ -10,6 +10,7 @@
     <string name="flat_pad">Flat Pad</string>
     <string name="draw_pad">Draw Pad</string>
     <string name="swarm_pad">Swarm Pad</string>
+    <string name="grid_pad">Grid Pad</string>
 
     <string name="basicpad_label">A simple background panel that tastefully shifts in hue.</string>
     <string name="trailpad_label">Glowing light trails follow you around the pad.</string>

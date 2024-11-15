@@ -5,6 +5,7 @@ object Constants {
         const val FLAT_PREFS = "flat_prefs_"
         const val DRAW_PREFS = "draw_prefs_"
         const val SWARM_PREFS = "swarm_prefs_"
+        const val GRID_PREFS = "grid_prefs_"
 
         const val QUANTIZER = "quantizer"
         const val OCTAVES = "octaves"

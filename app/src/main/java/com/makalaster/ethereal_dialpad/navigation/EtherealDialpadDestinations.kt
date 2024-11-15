@@ -39,11 +39,11 @@ object SwarmPad: EtherealDialpadDestination {
     override val route = "swarm_pad"
 }
 
-//object GridPad: EtherealDialpadDestination {
-//    @DrawableRes override val iconId = R.drawable.gridpad_icon
-//    @StringRes override val nameId = R.string.gridpad_label
-//    @StringRes override val descId = 0
-//    override val route = "grid_pad"
-//}
+object GridPad: EtherealDialpadDestination {
+    @DrawableRes override val iconId = R.drawable.gridpad_icon
+    @StringRes override val nameId = R.string.grid_pad
+    @StringRes override val descId = R.string.gridpad_label
+    override val route = "grid_pad"
+}
 
 val pads = listOf(FlatPad, DrawPad, SwarmPad)

@@ -6,7 +6,7 @@ import androidx.compose.runtime.setValue
 
 class PadSettings(
     var quantizer: PitchQuantizer = PitchQuantizer.PENTATONIC2,
-    var octaves: String = "",
+    var octaves: String = "3",
     delay: Boolean = true,
     flange: Boolean = false,
     softEnvelope: Boolean = true,

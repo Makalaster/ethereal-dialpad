@@ -7,3 +7,4 @@ val primaryDark = Color(0xFF00574B)
 
 val flatPadBackground = Color(-0xFFbfbfc0)
 val swarmPadBackground = Color(-0xefefe0)
+val gridPadBackground = Color(-0xbfbfc0)

@@ -2,8 +2,10 @@ package com.makalaster.ethereal_dialpad.main
 
 import android.os.Build
 import android.os.Bundle
-import androidx.activity.ComponentActivity
+import androidx.activity.SystemBarStyle
 import androidx.activity.compose.setContent
+import androidx.activity.enableEdgeToEdge
+import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
@@ -17,12 +19,17 @@ import com.makalaster.ethereal_dialpad.ui.theme.EtherealDialpadTheme
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class HomeActivity : ComponentActivity() {
+class HomeActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         WindowCompat.getInsetsController(window, window.decorView).systemBarsBehavior =
             WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
+
+        enableEdgeToEdge(
+            statusBarStyle = SystemBarStyle.dark(resources.getColor(android.R.color.transparent, null)),
+            navigationBarStyle = SystemBarStyle.dark(resources.getColor(android.R.color.transparent, null))
+        )
 
         setContent {
             EtherealDialpadApp(

@@ -16,12 +16,12 @@ val keystoreProperties = Properties().apply {
 
 android {
     namespace = "com.makalaster.ethereal_dialpad"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         applicationId = "com.makalaster.ethereal_dialpad"
         minSdk = 26
-        targetSdk = 34
+        targetSdk = 35
         versionCode = 9
         versionName = "1.2.0"
 
@@ -80,6 +80,8 @@ android {
 dependencies {
     implementation(libs.core.ktx)
     implementation(libs.lifecycle.runtime.ktx)
+
+    implementation(libs.app.compat)
     implementation(libs.activity.compose)
     implementation(platform(libs.compose.bom))
     implementation(libs.compose.ui)

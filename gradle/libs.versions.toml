@@ -1,13 +1,14 @@
 [versions]
-androidGradlePlugin = "8.5.2"
+androidGradlePlugin = "8.7.2"
 kotlinPlugin = "2.0.21"
 ksp = "2.0.21-1.0.25"
 
-ktx = "1.13.1"
-lifecycle = "2.8.6"
-activityCompose = "1.9.2"
-composeBom = "2024.09.03"
-navigationCompose = "2.8.2"
+appCompat = "1.7.0"
+ktx = "1.15.0"
+lifecycle = "2.8.7"
+activityCompose = "1.9.3"
+composeBom = "2024.11.00"
+navigationCompose = "2.8.4"
 hiltNavigationCompose = "1.2.0"
 
 datastore = "1.1.1"
@@ -24,6 +25,7 @@ espresso = "3.6.1"
 [libraries]
 core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "ktx"}
 lifecycle-runtime-ktx = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version.ref = "lifecycle" }
+app-compat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appCompat" }
 activity-compose = { group = "androidx.activity", name = "activity-compose", version.ref = "activityCompose" }
 compose-bom = { group = "androidx.compose", name = "compose-bom", version.ref = "composeBom" }
 compose-ui = { group = "androidx.compose.ui", name = "ui" }

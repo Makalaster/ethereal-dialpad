@@ -13,6 +13,8 @@ import com.makalaster.ethereal_dialpad.pads.draw.DrawPad
 import com.makalaster.ethereal_dialpad.pads.draw.DrawViewModel
 import com.makalaster.ethereal_dialpad.pads.flat.FlatPad
 import com.makalaster.ethereal_dialpad.pads.flat.FlatViewModel
+import com.makalaster.ethereal_dialpad.pads.grid.GridPad
+import com.makalaster.ethereal_dialpad.pads.grid.GridViewModel
 import com.makalaster.ethereal_dialpad.pads.swarm.SwarmPad
 import com.makalaster.ethereal_dialpad.pads.swarm.SwarmViewModel
 
@@ -54,9 +56,12 @@ fun EtherealDialpadNavHost(
                 toggleSystemBars(false)
             }
         }
-//        composable(route = GridPad.route) {
-//            GridPad()
-//        }
+        composable(route = GridPad.route) {
+            Pad(viewModel = hiltViewModel<GridViewModel>(), padTitle = R.string.grid_pad, onBackPressed = { goBack() }) { _, width, height, onTap ->
+                GridPad(width = width, height = height, onTap = onTap)
+                toggleSystemBars(false)
+            }
+        }
     }
 }
 
