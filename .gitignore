@@ -36,6 +36,7 @@ proguard/
 
 # Android Studio captures folder
 captures/
+assets/
 
 # IntelliJ
 *.iml
@@ -86,3 +87,6 @@ lint/tmp/
 # lint/reports/
 
 .DS_Store
+/fastlane/ethereal-dialpad-896294f6b213.json
+/fastlane/keystore.properties
+/private_key.pepk
