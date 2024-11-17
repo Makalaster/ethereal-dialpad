@@ -1,0 +1,43 @@
+# This file contains the fastlane.tools configuration
+# You can find the documentation at https://docs.fastlane.tools
+#
+# For a list of all available actions, check out
+#
+#     https://docs.fastlane.tools/actions
+#
+# For a list of all available plugins, check out
+#
+#     https://docs.fastlane.tools/plugins/available-plugins
+#
+
+# Uncomment the line if you want fastlane to automatically update itself
+# update_fastlane
+
+default_platform(:android)
+
+platform :android do
+  def generate_apk(build_type)
+    gradle(
+      task: "assemble",
+      build_type: build_type
+    )
+  end
+
+  def generate_aab
+    gradle(
+      task: "bundle",
+      build_type: 'Release'
+    )
+  end
+
+  desc "Build apk for debug"
+  lane :build_debug do
+    generate_apk('Debug')
+  end
+
+  desc "Build apk and aab files for release"
+  lane :build_release do
+    generate_apk('Release')
+    generate_aab
+  end
+end
