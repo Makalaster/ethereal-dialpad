@@ -1,17 +1,17 @@
 [versions]
-androidGradlePlugin = "8.10.0"
+androidGradlePlugin = "8.10.1"
 kotlinPlugin = "2.1.21"
-ksp = "2.1.21-2.0.1"
+ksp = "2.1.21-2.0.2"
 
-appCompat = "1.7.0"
+appCompat = "1.7.1"
 ktx = "1.16.0"
-lifecycle = "2.9.0"
+lifecycle = "2.9.2"
 activityCompose = "1.10.1"
-composeBom = "2025.05.00"
-navigationCompose = "2.9.0"
+composeBom = "2025.07.00"
+navigationCompose = "2.9.2"
 hiltNavigationCompose = "1.2.0"
-
-datastore = "1.1.6"
+ktxSerialization = "1.8.1"
+datastore = "1.1.7"
 
 hilt = "2.56.2"
 
@@ -37,6 +37,7 @@ navigation-compose = { group = "androidx.navigation", name = "navigation-compose
 hilt-navigation-compose = { group = "androidx.hilt", name = "hilt-navigation-compose", version.ref = "hiltNavigationCompose" }
 
 datastore-preferences = { group = "androidx.datastore", name = "datastore-preferences", version.ref = "datastore" }
+kotlin-serialization-json = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-json", version.ref = "ktxSerialization" }
 
 hilt = { group = "com.google.dagger", name = "hilt-android", version.ref = "hilt" }
 hilt-compiler = { group = "com.google.dagger", name = "hilt-compiler", version.ref = "hilt" }
@@ -59,3 +60,4 @@ kotlin = { id = "org.jetbrains.kotlin.android", version.ref = "kotlinPlugin" }
 hilt = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlinPlugin"}
+ktx-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlinPlugin"}

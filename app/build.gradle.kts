@@ -7,6 +7,7 @@ plugins {
     alias(libs.plugins.hilt)
     alias(libs.plugins.ksp)
     alias(libs.plugins.compose.compiler)
+    alias(libs.plugins.ktx.serialization)
 }
 
 val keystorePropertiesFile: File = rootProject.file(".\\fastlane\\keystore.properties")
@@ -93,6 +94,7 @@ dependencies {
     implementation(libs.hilt.navigation.compose)
 
     implementation(libs.datastore.preferences)
+    implementation(libs.kotlin.serialization.json)
 
     implementation(libs.hilt)
     ksp(libs.hilt.compiler)

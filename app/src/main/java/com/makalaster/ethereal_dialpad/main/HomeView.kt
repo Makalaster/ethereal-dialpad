@@ -13,9 +13,11 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
+import androidx.compose.material.icons.filled.Info
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -40,7 +42,8 @@ import com.makalaster.ethereal_dialpad.ui.theme.EtherealDialpadTheme
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeView(
-    onPadClick: (String) -> Unit,
+    onPadClick: (EtherealDialpadDestination) -> Unit,
+    onAboutClick: () -> Unit
 ) {
     Scaffold(
         topBar = {
@@ -54,6 +57,17 @@ fun HomeView(
                         text = stringResource(id = R.string.app_name),
                         color = Color.Black
                     )
+                },
+                actions = {
+                    IconButton(
+                        onClick = onAboutClick
+                    ) {
+                        Icon(
+                            imageVector = Icons.Filled.Info,
+                            contentDescription = "About",
+                            tint = Color.Black
+                        )
+                    }
                 }
             )
         }
@@ -64,7 +78,7 @@ fun HomeView(
 
 @Composable
 fun HomeContent(
-    onPadClick: (String) -> Unit,
+    onPadClick: (EtherealDialpadDestination) -> Unit,
     modifier: Modifier = Modifier
 ) {
     Column(
@@ -104,12 +118,12 @@ fun HomeContent(
 @Composable
 fun PadItem(
     pad: EtherealDialpadDestination,
-    onPadClick: (String) -> Unit
+    onPadClick: (EtherealDialpadDestination) -> Unit
 ) {
     Column(
         modifier = Modifier
             .padding(horizontal = 8.dp)
-            .clickable { onPadClick(pad.route) }
+            .clickable { onPadClick(pad) }
     ) {
         Text(
             style = MaterialTheme.typography.titleLarge,
@@ -159,7 +173,8 @@ fun PadItemPreview() {
 fun HomeViewPreview() {
     EtherealDialpadTheme {
         HomeView(
-            onPadClick = {}
+            onPadClick = {},
+            onAboutClick = {}
         )
     }
 }

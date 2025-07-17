@@ -6,6 +6,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import com.makalaster.ethereal_dialpad.about.AboutScreen
 import com.makalaster.ethereal_dialpad.R
 import com.makalaster.ethereal_dialpad.main.HomeView
 import com.makalaster.ethereal_dialpad.pads.Pad
@@ -25,47 +26,55 @@ fun EtherealDialpadNavHost(
 ) {
     NavHost(
         navController = navController,
-        startDestination = Home.route,
+        startDestination = Home,
         modifier = Modifier,
     ) {
         fun goBack() {
             navController.popBackStack()
         }
 
-        composable(route = Home.route) {
+        composable<Home> {
             HomeView(
-                onPadClick = navController::navigateSingleTopTo
+                onPadClick = navController::navigateSingleTopTo,
+                onAboutClick = { navController.navigate(About) }
             )
             toggleSystemBars(true)
         }
-        composable(route = FlatPad.route) {
+        composable<FlatPad> {
             Pad(viewModel = hiltViewModel<FlatViewModel>(), R.string.flat_pad, { goBack() }) { _, width, height, onTap ->
                 FlatPad(width = width, height = height, onTap = onTap)
                 toggleSystemBars(false)
             }
         }
-        composable(route = DrawPad.route) {
+        composable<DrawPad> {
             Pad(viewModel = hiltViewModel<DrawViewModel>(), R.string.draw_pad, { goBack() }) { _, width, height, onTap ->
                 DrawPad(width = width, height = height, onTap = onTap)
                 toggleSystemBars(false)
             }
         }
-        composable(route = SwarmPad.route) {
+        composable<SwarmPad> {
             Pad(viewModel = hiltViewModel<SwarmViewModel>(), R.string.swarm_pad, { goBack() }) { _, width, height, onTap ->
                 SwarmPad(width = width, height = height, onTap = onTap)
                 toggleSystemBars(false)
             }
         }
-        composable(route = GridPad.route) {
+        composable<GridPad> {
             Pad(viewModel = hiltViewModel<GridViewModel>(), padTitle = R.string.grid_pad, onBackPressed = { goBack() }) { _, width, height, onTap ->
                 GridPad(width = width, height = height, onTap = onTap)
                 toggleSystemBars(false)
             }
         }
+
+        composable<About> {
+            AboutScreen(
+                onBackPressed = ::goBack
+            )
+            toggleSystemBars(true)
+        }
     }
 }
 
-fun NavHostController.navigateSingleTopTo(route: String) =
+fun NavHostController.navigateSingleTopTo(route: EtherealDialpadDestination) =
     this.navigate(route) {
         launchSingleTop = true
     }
