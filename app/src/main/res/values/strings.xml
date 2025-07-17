@@ -28,4 +28,9 @@
     <string name="pref_duet_off">pitch vs. volume</string>
     <string name="title_activity_pad">FullscreenActivity</string>
 
+    <string name="about_title">Welcome!</string>
+    <string name="sandbox">Each pad is a sandbox in which to play with lights and sounds.</string>
+    <string name="settings_guide">To bring up the settings for a pad, tap the screen once, then tap the three dots button in the top right corner.</string>
+    <string name="individual_settings">Settings apply to each pad individually, so you can customize each to sound exactly how you like.</string>
+
 </resources>
